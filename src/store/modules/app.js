@@ -6,8 +6,8 @@ const state = {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
-  language: getLanguage(),
+  device: 'desktop',
+  language: getLanguage()
 }
 
 const mutations = {

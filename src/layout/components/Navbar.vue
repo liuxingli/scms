@@ -1,32 +1,18 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
-    <breadcrumb class="breadcrumb-container" />
-
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+      <el-dropdown class="right-menu-item hover-effect" trigger="click">
+        <div class="right-menu-item hover-effect">
+          <svg-icon icon-class="user" />
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              {{ $t('navbar.dashboard') }}
-            </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item> {{ $t('navbar.github') }}</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
+        <div class="right-menu-item hover-effect">{{ name }} </div>
+        <div class="right-menu-item hover-effect">
+          <el-button type="primary" plain @click="logout">{{ $t('navbar.logOut') }} </el-button>
+        </div>
       </el-dropdown>
+      <lang-select class="right-menu-item hover-effect" />
     </div>
   </div>
 </template>
@@ -40,13 +26,13 @@ import LangSelect from '@/components/LangSelect'
 export default {
   components: {
     Breadcrumb,
-    Hamburger
-    LangSelect,
+    Hamburger,
+    LangSelect
   },
   computed: {
     ...mapGetters([
-      'sidebar',
-      'avatar'
+      'name',
+      'sidebar'
     ])
   },
   methods: {
@@ -109,30 +95,6 @@ export default {
 
         &:hover {
           background: rgba(0, 0, 0, .025)
-        }
-      }
-    }
-
-    .avatar-container {
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
         }
       }
     }
