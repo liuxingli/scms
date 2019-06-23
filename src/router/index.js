@@ -51,44 +51,10 @@ export const constantRoutes = [
       path: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       name: 'Dashboard',
-      meta: { title: 'dashboard', icon: 'dashboard' }
+      meta: { title: 'dashboard', icon: 'home' }
     }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'form', icon: 'form' }
-      }
-    ]
   }
+
 ]
 
 /**
@@ -97,70 +63,145 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/nested',
+    path: '/device',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/device/acs',
+    name: 'device',
     meta: {
-      title: 'nested',
-      icon: 'nested'
+      title: 'device',
+      icon: 'setting'
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'menu1-3' }
-          }
-        ]
+        path: 'acs',
+        component: () => import('@/views/device/acs/index'),
+        meta: { title: 'acs' }
       },
+
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: 'cell',
+        component: () => import('@/views/device/cell/index'),
+        meta: { title: 'cell' }
+      },
+
+      {
+        path: 'network',
+        component: () => import('@/views/device/network/index'),
+        meta: { title: 'network' }
+      },
+
+      {
+        path: 'time',
+        component: () => import('@/views/device/time/index'),
+        meta: { title: 'time' }
+      },
+
+      {
+        path: 'sync',
+        component: () => import('@/views/device/sync/index'),
+        meta: { title: 'sync' }
+      },
+
+      {
+        path: 'operation',
+        component: () => import('@/views/device/operation/index'),
+        meta: { title: 'operation' }
+      },
+
+      {
+        path: 'pm',
+        component: () => import('@/views/device/pm/index'),
+        meta: { title: 'pm' }
+      },
+
+      {
+        path: 'fm',
+        component: () => import('@/views/device/fm/index'),
+        meta: { title: 'fm' }
+      },
+
+      {
+        path: 'debug',
+        component: () => import('@/views/device/debug/index'),
+        meta: { title: 'debug' }
+      },
+
+      {
+        path: 'upgrade',
+        component: () => import('@/views/device/upgrade/index'),
+        meta: { title: 'upgrade' }
+      },
+
+      {
+        path: 'factory',
+        component: () => import('@/views/device/factory/index'),
+        meta: { title: 'factory' }
+      },
+
+      {
+        path: 'security',
+        component: () => import('@/views/device/security/index'),
+        name: 'security',
+        meta: { title: 'security' }
       }
     ]
   },
 
   {
-    path: 'external-link',
+    path: '/datamodel',
     component: Layout,
+    redirect: '/datamodel/devicetree',
+    name: 'datamodel',
+    meta: { title: 'datamodel', icon: 'db', roles: ['admin', 'operator'] },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'externalLink', icon: 'link' }
+        path: 'devicetree',
+        name: 'devicetree',
+        component: () => import('@/views/datamodel/devicetree/index'),
+        meta: { title: 'devicetree' }
+      },
+
+      {
+        path: 'internaltree',
+        name: 'internaltree',
+        component: () => import('@/views/datamodel/internaltree/index'),
+        meta: { title: 'internaltree' }
+      },
+
+      {
+        path: 'exportdb',
+        name: 'exportdb',
+        component: () => import('@/views/datamodel/exportdb/index'),
+        meta: { title: 'exportdb' }
+      },
+
+      {
+        path: 'importdb',
+        name: 'importdb',
+        component: () => import('@/views/datamodel/importdb/index'),
+        meta: { title: 'importdb' }
+      }
+    ]
+  },
+
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/account',
+    name: 'permission',
+    meta: { title: 'permission', icon: 'account', roles: ['admin'] },
+    children: [
+      {
+        path: 'account',
+        name: 'account',
+        component: () => import('@/views/permission/account/index'),
+        meta: { title: 'account' }
+      },
+      {
+        path: 'securityconfig',
+        name: 'securityconfig',
+        component: () => import('@/views/permission/securityconfig/index'),
+        meta: { title: 'securityconfig' }
       }
     ]
   },
