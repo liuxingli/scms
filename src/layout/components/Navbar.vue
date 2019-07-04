@@ -4,13 +4,12 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <el-dropdown class="right-menu-item hover-effect" trigger="click">
-        <div class="right-menu-item hover-effect">
-          <svg-icon icon-class="user" />
-        </div>
-        <div class="right-menu-item hover-effect">{{ name }} </div>
-        <div class="right-menu-item hover-effect">
-          <el-button type="primary" plain @click="logout">{{ $t('navbar.logOut') }} </el-button>
-        </div>
+        <span class="el-dropdown-link">{{ name }} <i class="el-icon-arrow-down el-icon--right" /></span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+            <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
       </el-dropdown>
       <lang-select class="right-menu-item hover-effect" />
     </div>

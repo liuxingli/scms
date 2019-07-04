@@ -48,7 +48,7 @@ export function login(data) {
     code: 20000,
     data: {
       roles: ['admin'],
-      name: 'admin'
+      username: 'admin'
     }
   }
  */
@@ -143,6 +143,16 @@ export function deleteuser(data) {
   {
     url: '/user/query',
     method: 'get',
+  }
+
+  queryuser response data example :
+  {
+    url: '/user/add',
+    code: 20000,
+    data:
+    [{ roles: ['admin'], username: 'admin', password: '111111' },
+     { roles: ['operator'], username: 'operator', password: '111111' },
+     { roles: ['guest'], username: 'guest', password: '111111' }]
   }
 */
 export function queryusers() {

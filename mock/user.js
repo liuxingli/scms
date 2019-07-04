@@ -1,9 +1,9 @@
 import Mock from 'mockjs'
 
 const usermap = new Map([
-  ['admin-token', { roles: ['admin'], name: 'admin', password: '111111' }],
-  ['operator-token', { roles: ['operator'], name: 'operator', password: '111111' }],
-  ['guest-token', { roles: ['guest'], name: 'guest', password: '111111' }]
+  ['admin-token', { roles: ['admin'], username: 'admin', password: '111111' }],
+  ['operator-token', { roles: ['operator'], username: 'operator', password: '111111' }],
+  ['guest-token', { roles: ['guest'], username: 'guest', password: '111111' }]
 ])
 
 export default [
@@ -16,7 +16,7 @@ export default [
 
       let tokenstr = ''
       for (const [key, value] of usermap) {
-        if ((value.name === username) && (value.password === password)) {
+        if ((value.username === username) && (value.password === password)) {
           tokenstr = key
           break
         }
@@ -79,7 +79,7 @@ export default [
 
       let userexist = false
       for (const value of usermap.values()) {
-        if (value.name === username) {
+        if (value.username === username) {
           userexist = true
           break
         }
@@ -93,7 +93,7 @@ export default [
       } else {
         // add user to user map
         const addtoken = Mock.Random.id()
-        usermap.set(addtoken, { roles: roles, name: username, password: password })
+        usermap.set(addtoken, { roles: roles, username: username, password: password })
 
         return {
           code: 20000,
@@ -113,7 +113,7 @@ export default [
       let userexist = false
       let token = ''
       for (const [key, value] of usermap) {
-        if (value.name === username) {
+        if (value.username === username) {
           userexist = true
           token = key
           break
@@ -127,7 +127,7 @@ export default [
         }
       } else {
         // update user to user map
-        usermap.set(token, { roles: roles, name: username, password: password })
+        usermap.set(token, { roles: roles, username: username, password: password })
 
         return {
           code: 20000,
@@ -147,7 +147,7 @@ export default [
       let userexist = false
       let token = ''
       for (const [key, value] of usermap) {
-        if (value.name === username) {
+        if (value.username === username) {
           userexist = true
           token = key
           break
