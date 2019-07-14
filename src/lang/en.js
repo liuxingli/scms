@@ -6,13 +6,13 @@ export default {
     cell: 'Cell Setting',
     debug: 'Debug Setting',
     factory: 'Calibration Setting',
-    fm: 'Fault Management',
+    neighborcell: 'Neighbor cell Setting',
     network: 'Network Setting',
     operation: 'Device Operation',
     pm: 'Performance Management',
     security: 'IPSec Management',
     sync: 'Synchronization Setting',
-    time: 'Time Setting',
+    measurement: 'Measurement Setting',
     upgrade: 'Firmware Upgrade',
     permission: 'Permission',
     account: 'Account',
@@ -26,15 +26,22 @@ export default {
   global: {
     submit: 'Submit',
     cancel: 'Cancel',
+    refresh: 'Refresh',
+    selectfile: 'Select File',
+    uploadfile: 'Upload file',
+    importfile: 'Import file',
+    exportfile: 'Export file',
     fetchsuccess: 'Fetch data success',
     fetchfail: 'Failed to fetch data from server',
     submitsuccess: 'Submit success',
     submitfail: 'Failed to submit data to server',
+    upgradefail: 'Failed to do upgrade the firmware',
     filedownloadsuccess: 'File download success',
     filedownloadfail: 'Failed to download from from server',
     fileuploadsuccess: 'File upload sueesss',
     fileuploadfail: 'Failed to upload file to server',
     invalidurl: 'Invalid URL',
+    invalidip: 'Invalid IP',
     invalidipv4: 'Invalid IPV4',
     invalidipv6: 'Invalid IPV6',
     invalidipv4v6: 'Invalid IPV4/V6',
@@ -186,8 +193,15 @@ export default {
     id_upload_periodic: 'PeriodicUpload Policy',
     id_upload_maxexceed: 'Upload Policy When Max Exceeded',
     id_upload_alarm: 'Upload Policy When Alarm Raised',
-    id_upload_poweron: 'Upload Policy When PowerOn'
+    id_upload_poweron: 'Upload Policy When PowerOn',
 
+    id_pm_enable: 'PM periodic upload enable',
+    id_pm_url: 'PM upload URL',
+    id_pm_username: 'PM upload UserName',
+    id_pm_password: 'PM upload Password',
+    id_pm_interval: 'PM upload Interval([1:65535]s)',
+
+    id_hwwatchdog_enable: 'Hardware Watchdog Enable'
   },
   permission: {
     createuser: 'Create User',
@@ -242,5 +256,62 @@ export default {
     devicelogtitle: 'Device Log',
     uploadtitle: 'Upload Policy',
     dumptitle: 'Log Dump'
+  },
+  factory: {
+    calibrationtitle: 'Calibration files',
+    vendorlogotitle: 'Vendor logo file',
+    calibrationfile: 'Calibration file',
+    pdrfile: 'PDR Amendment file',
+    pacalifile: 'PA Calibration file',
+    logofile: 'Vendor logo file'
+  },
+  upgrade: {
+    tip: 'Tip:Select and Upload firware file to Device and click Upgrade button',
+    note: 'Upgrade procedure will last several minutes,Device will reboot after upgrade procedure',
+    verinfo: 'Current version info',
+    upgradetitle: 'Upgrade Operation',
+    upgrade: 'Upgrade',
+    upgradeStatus: 'Upgrade Progress',
+    statusupload: 'Firmware upload',
+    statusupgrading: 'Upgrading',
+    statusreboot: 'Reboot',
+    statuscomplete: 'Complete'
+  },
+  operation: {
+    pingtitle: 'Ping Target IP',
+    ping: 'Ping Target IP',
+    reboot: 'Device Reboot',
+    factoryreboot: 'FactoryReboot',
+    pingsuccess: 'Ping Success',
+    rebootsuccess: 'Reboot start',
+    factoryrebootsuccess: 'Factory Reset Success',
+    pingfail: 'Ping Fail',
+    rebootfail: 'Reboot fail',
+    factoryrebootfail: 'Fatory Reset fail'
+  },
+  security: {
+    sessionlife: 'Max session life([60:65535]s)',
+    loginattempnum: 'Max login fail attemps[3:8]',
+    passwordlocktime: 'Password lock time after max retry([30:65535]s)',
+    passwordresuse: 'Password Max resuse times([0:3]) ',
+    passwordlifedays: 'Passord expire days([3:65535])',
+    passwordgracedays: 'Password grace days([3:65535])',
+    passwordminlen: 'Password min len([6:18])',
+    passwordcomplexity: 'Password complexity(num,upper,lower,symbol[1:4])'
+  },
+  db: {
+    tip: 'The Operator default is for Factory reset only and others will be apply after reboot',
+    removedefultfile: 'Remove Operator Default File',
+    removefile: 'Remove',
+    importldbfile: 'Import DB files',
+    exportldbfile: 'Export DB files',
+    importldbtype: 'Select import DB type'
+  },
+  tree: {
+    devicetreetitle: 'Tree View of Device datamodel',
+    removefile: 'Remove',
+    importldbfile: 'Import DB files',
+    exportldbfile: 'Export DB files',
+    importldbtype: 'Select import DB type'
   }
 }

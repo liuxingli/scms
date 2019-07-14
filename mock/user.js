@@ -181,5 +181,38 @@ export default [
         data: [...usermap.values()]
       }
     }
+  },
+
+  // getauthcfg
+  {
+    url: '/user/getauthcfg',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: {
+          sessionlife: '1800',
+          loginattempnum: '5',
+          passwordlocktime: '60',
+          passwordresuse: '3',
+          passwordlifedays: '3',
+          passwordgracedays: '5',
+          passwordminlen: '6',
+          passwordcomplexity: '3'
+        }
+      }
+    }
+  },
+
+  // saveauthcfg
+  {
+    url: '/user/saveauthcfg',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000
+      }
+    }
   }
+
 ]

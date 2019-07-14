@@ -6,13 +6,13 @@ export default {
     cell: '小区设置',
     debug: '调试设置',
     factory: '校准参数',
-    fm: '报警管理',
+    neighborcell: '邻区设置',
     network: '网络设置',
     operation: '设备操作',
     pm: '性能管理',
     security: 'IPSec管理',
     sync: '同步设置',
-    time: '时间设置',
+    measurement: '测量设置',
     upgrade: '固件升级',
     permission: '权限管理',
     account: '账户管理',
@@ -26,10 +26,16 @@ export default {
   global: {
     submit: '提交',
     cancel: '取消',
+    refresh: '刷新',
+    selectfile: '选择文件',
+    uploadfile: '上传文件',
+    importfile: '导入文件',
+    exportfile: '导出文件',
     fetchsuccess: '获取数据成功',
     fetchfail: '从服务器获取数据失败',
     submitsuccess: '提交数据成功',
     submitfail: '提交数据失败',
+    upgradefail: '执行固件更新失败',
     filedownloadsuccess: '文件下载成功',
     filedownloadfail: '文件下载失败',
     fileuploadsuccess: '文件上传成功',
@@ -187,7 +193,15 @@ export default {
     id_upload_periodic: '周期上传策略',
     id_upload_maxexceed: '达到最大容量上传策略',
     id_upload_alarm: '报警发生上传策略',
-    id_upload_poweron: '上电时上传策略'
+    id_upload_poweron: '上电时上传策略',
+
+    id_pm_enable: '性能报告周期上传使能',
+    id_pm_url: '性能报告上传URL',
+    id_pm_username: '性能报告上传用户名',
+    id_pm_password: '性能报告上传密码',
+    id_pm_interval: '性能报告上传间隔([1:65535]秒)',
+
+    id_hwwatchdog_enable: '硬件看门狗使能'
   },
   permission: {
     createuser: '创建账户',
@@ -242,5 +256,62 @@ export default {
     devicelogtitle: '设备日志',
     uploadtitle: '上传策略',
     dumptitle: 'log导出'
+  },
+  factory: {
+    calibrationtitle: '校准文件',
+    vendorlogotitle: '厂商Logo文件',
+    calibrationfile: '射频校准文件',
+    pdrfile: 'PDR附加文件',
+    pacalifile: 'PA校准文件',
+    logofile: 'logo文件'
+  },
+  upgrade: {
+    tip: '注意:上传固件文件到设备，然后点击升级,重启之后确认升级后的版本',
+    note: '升级会持续十几分钟,在升级过程中设备会重启',
+    verinfo: '目前的版本信息',
+    upgradetitle: '固件升级操作',
+    upgrade: '升级',
+    upgradeStatus: '升级进度',
+    statusupload: '固件上传',
+    statusupgrading: '升级中',
+    statusreboot: '设备重启中',
+    statuscomplete: '升级完成'
+  },
+  operation: {
+    pingtitle: 'Ping目的地址',
+    ping: 'Ping',
+    reboot: '设备重启',
+    factoryreboot: '恢复出厂设置',
+    pingsuccess: 'Ping成功',
+    rebootsuccess: '设备重启开始',
+    factoryrebootsuccess: '恢复出厂设置成功',
+    pingfail: 'Ping失败',
+    rebootfail: '设备重启失败',
+    factoryrebootfail: '恢复出厂设置失败'
+  },
+  security: {
+    sessionlife: 'Session生命周期([60:65535]秒)',
+    loginattempnum: 'Login失败最大重试次数[3:8]',
+    passwordlocktime: '密码锁定时长([30:65535]秒)',
+    passwordresuse: '密码最大重用次数([0:3]) ',
+    passwordlifedays: '密码有效天数([3:65535])',
+    passwordgracedays: '密码失效提前提醒天数([3:65535])',
+    passwordminlen: '密码最小长度([6:18])',
+    passwordcomplexity: '密码复杂度(数字，大写字母，小写字母，符号的种类[1:4])'
+  },
+  db: {
+    tip: '运营商默认配置文件只在恢复出厂设置的时候生效，其他文件在重启后生效',
+    removedefultfile: '删除运营商默认配置文件',
+    removefile: '删除',
+    importldbfile: '导入数据模型文件',
+    exportldbfile: '导出数据模型文件',
+    importldbtype: '选择数据模型的类型'
+  },
+  tree: {
+    devicetreetitle: '设备数据模型树',
+    removefile: 'Remove',
+    importldbfile: 'Import DB files',
+    exportldbfile: 'Export DB files',
+    importldbtype: 'Select import DB type'
   }
 }

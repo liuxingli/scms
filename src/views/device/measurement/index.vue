@@ -1,7 +1,7 @@
 <template>
-  <div class="time-container">
-    <div class="time-text">name: {{ name }}</div>
-    <div class="time-text">roles: <span v-for="role in roles" :key="role">{{ role }}</span></div>
+  <div class="measurement-container">
+    <div class="measurement-text">name: {{ name }}</div>
+    <div class="measurement-text">roles: <span v-for="role in roles" :key="role">{{ role }}</span></div>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Time',
+  name: 'Measurement',
   computed: {
     ...mapGetters([
       'name',
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.time {
+.measurement {
   &-container {
     margin: 30px;
   }

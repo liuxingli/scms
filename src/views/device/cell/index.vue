@@ -13,6 +13,7 @@
               inactive-value="0"
             />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_privatenwflg')" prop="id_privatenwflg">
             <el-switch
               v-model="commonform.id_privatenwflg"
@@ -40,21 +41,27 @@
           <el-form-item :label="$t('cpe.id_plmnid')" prop="id_plmnid">
             <el-input v-model="commonform.id_plmnid" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_tac')" prop="id_tac">
             <el-input v-model="commonform.id_tac" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_secgwserver')" prop="id_secgwserver">
             <el-input v-model="commonform.id_secgwserver" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_s1siglinksrv')" prop="id_s1siglinksrv">
             <el-input v-model="commonform.id_s1siglinksrv" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_s1retrymaxnum')" prop="id_s1retrymaxnum">
             <el-input v-model.number="commonform.id_s1retrymaxnum" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_s1status')" prop="id_s1status">
             <el-input v-model.number="commonform.id_s1status" :disabled="true" />
           </el-form-item>
+
           <el-button type="primary" :disabled="submitpermission" class="cell-text" @click="submitcommonForm">{{ $t('global.submit') }}</el-button>
         </el-form>
       </el-tab-pane>
@@ -64,6 +71,7 @@
           <el-form-item :label="$t('cpe.id_cell1_cellid')" prop="id_cell1_cellid">
             <el-input v-model="cell1form.id_cell1_cellid" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_opState')" prop="id_cell1_opState">
             <el-switch
               v-model="cell1form.id_cell1_opState"
@@ -74,30 +82,39 @@
               :disabled="true"
             />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_connuenum')" prop="id_cell1_connuenum">
             <el-input v-model="cell1form.id_cell1_connuenum" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_voltenum')" prop="id_cell1_voltenum">
             <el-input v-model="cell1form.id_cell1_voltenum" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_candfreqlist')" prop="id_cell1_candfreqlist">
             <el-input v-model="cell1form.id_cell1_candfreqlist" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_freqdl')" prop="id_cell1_freqdl">
             <el-input v-model="cell1form.id_cell1_freqdl " :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_frequl')" prop="id_cell1_frequl">
             <el-input v-model="cell1form.id_cell1_frequl" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_band')" prop="id_cell1_band">
             <el-input v-model="cell1form.id_cell1_band" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_candpcilist')" prop="id_cell1_candpcilist">
             <el-input v-model="cell1form.id_cell1_candpcilist" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_pci')" prop="id_cell1_pci">
             <el-input v-model="cell1form.id_cell1_pci" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_dlbandwidth')" prop="id_cell1_dlbandwidth">
             <el-select v-model="cell1form.id_cell1_dlbandwidth">
               <el-option
@@ -107,6 +124,7 @@
               />
             </el-select>
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_ulbandwidth')" prop="id_cell1_ulbandwidth">
             <el-select v-model="cell1form.id_cell1_ulbandwidth">
               <el-option
@@ -116,24 +134,30 @@
               />
             </el-select>
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_referencesignalpower')" prop="id_cell1_referencesignalpower">
             <el-input v-model="cell1form.id_cell1_referencesignalpower" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_pagain')" prop="id_cell1_pagain">
             <el-input v-model="cell1form.id_cell1_pagain" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_subframepattern')" prop="id_cell1_subframepattern">
             <el-input-number v-model="cell1form.id_cell1_subframepattern" :min="0" :max="6" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_specialsubframepattern')" prop="id_cell1_specialsubframepattern">
             <el-input-number v-model="cell1form.id_cell1_specialsubframepattern" :min="0" :max="8" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_txantennacount')" prop="id_cell1_txantennacount">
             <el-radio-group v-model="cell1form.id_cell1_txantennacount">
               <el-radio label="1">1</el-radio>
               <el-radio label="2">2</el-radio>
             </el-radio-group>
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_rxantennacount')" prop="id_cell1_rxantennacount">
             <el-radio-group v-model="cell1form.id_cell1_rxantennacount">
               <el-radio label="1">1</el-radio>
@@ -150,6 +174,7 @@
           <el-form-item :label="$t('cpe.id_cell1_cellid')" prop="id_cell2_cellid">
             <el-input v-model="cell2form.id_cell2_cellid" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_opState')" prop="id_cell2_opState">
             <el-switch
               v-model="cell2form.id_cell2_opState"
@@ -160,30 +185,39 @@
               :disabled="true"
             />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_connuenum')" prop="id_cell2_connuenum">
             <el-input v-model="cell2form.id_cell2_connuenum" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_voltenum')" prop="id_cell2_voltenum">
             <el-input v-model="cell2form.id_cell2_voltenum" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_candfreqlist')" prop="id_cell2_candfreqlist">
             <el-input v-model="cell2form.id_cell2_candfreqlist" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_freqdl')" prop="id_cell2_freqdl">
             <el-input v-model="cell2form.id_cell2_freqdl" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_frequl')" prop="id_cell2_frequl">
             <el-input v-model="cell2form.id_cell2_frequl" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_band')" prop="id_cell2_band">
             <el-input v-model="cell2form.id_cell2_band" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_candpcilist')" prop="id_cell2_candpcilist">
             <el-input v-model="cell2form.id_cell2_candpcilist" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_pci')" prop="id_cell2_pci">
             <el-input v-model="cell2form.id_cell2_pci" :disabled="true" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_dlbandwidth')" prop="id_cell2_dlbandwidth">
             <el-select v-model="cell2form.id_cell2_dlbandwidth">
               <el-option
@@ -193,6 +227,7 @@
               />
             </el-select>
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_ulbandwidth')" prop="id_cell2_ulbandwidth">
             <el-select v-model="cell2form.id_cell2_ulbandwidth">
               <el-option
@@ -202,24 +237,30 @@
               />
             </el-select>
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_referencesignalpower')" prop="id_cell2_referencesignalpower">
             <el-input v-model="cell2form.id_cell2_referencesignalpower" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_pagain')" prop="id_cell2_pagain">
             <el-input v-model="cell2form.id_cell2_pagain" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_subframepattern')" prop="id_cell2_subframepattern">
             <el-input-number v-model="cell2form.id_cell2_subframepattern" :min="0" :max="6" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_specialsubframepattern')" prop="id_cell2_specialsubframepattern">
             <el-input-number v-model="cell2form.id_cell2_specialsubframepattern" :min="0" :max="8" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_txantennacount')" prop="id_cell2_txantennacount">
             <el-radio-group v-model="cell2form.id_cell2_txantennacount">
               <el-radio label="1">1</el-radio>
               <el-radio label="2">2</el-radio>
             </el-radio-group>
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cell1_rxantennacount')" prop="id_cell2_rxantennacount">
             <el-radio-group v-model="cell2form.id_cell2_rxantennacount">
               <el-radio label="1">1</el-radio>

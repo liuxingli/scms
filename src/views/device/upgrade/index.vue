@@ -1,94 +1,71 @@
 <template>
-  <div class="acs-container">
-    <div class="block" style="height:400px">
-      <div style="height:100%;width:100%">
-        <el-row :gutter="10" type="flex" justify="space-between">
-          <el-col :span="12">
-            <div class="grid-content ">
-              <div class="acs-text"> {{ $t("dashboard.title") }}</div>
-              <el-form id="acsinf" ref="acsinf" :model="form" label-width="200px" size="small">
-                <el-form-item :label="$t('cpe.id_modelname')" prop="modelname">
-                  <el-input v-model="form.modelname" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_manufacturer')" prop="manufacturer">
-                  <el-input v-model="form.manufacturer" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_oui')" prop="oui">
-                  <el-input v-model="form.oui" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_serialnumber')" prop="serialnumber">
-                  <el-input v-model="form.serialnumber" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_productclass')" prop="productclass">
-                  <el-input v-model="form.productclass" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_hardwarever')" prop="hardwarever">
-                  <el-input v-model="form.hardwarever" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_softwarever')" prop="softwarever">
-                  <el-input v-model="form.softwarever" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_platform')" prop="platform">
-                  <el-input v-model="form.platform" />
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-col>
-          <el-col :span="12">
-            <div class="grid-content ">
-              <div class="acs-text"> {{ $t("dashboard.title") }}</div>
-              <el-form id="acsinf" ref="acsinf" :model="form" label-width="200px" size="small">
-                <el-form-item :label="$t('cpe.id_modelname')" prop="modelname">
-                  <el-input v-model="form.modelname" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_manufacturer')" prop="manufacturer">
-                  <el-input v-model="form.manufacturer" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_oui')" prop="oui">
-                  <el-input v-model="form.oui" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_serialnumber')" prop="serialnumber">
-                  <el-input v-model="form.serialnumber" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_productclass')" prop="productclass">
-                  <el-input v-model="form.productclass" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_hardwarever')" prop="hardwarever">
-                  <el-input v-model="form.hardwarever" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_softwarever')" prop="softwarever">
-                  <el-input v-model="form.softwarever" />
-                </el-form-item>
-                <el-form-item :label="$t('cpe.id_platform')" prop="platform">
-                  <el-input v-model="form.platform" />
-                </el-form-item>
-              </el-form>
-            </div>
-          </el-col>
-        </el-row>
-      </div>
-    </div>
-  </div></template>
+  <div class="upgrade-container">
+    <div class="upgrade-text">{{ $t('upgrade.tip') }}</div>
+    <div class="upgrade-text">{{ $t('upgrade.note') }}</div>
+    <br>
+    <div class="upgrade-title">{{ $t('upgrade.verinfo') }}</div>
+    <el-form id="deviceinf" ref="deviceinf" :model="form" label-width="180px" size="middle">
+      <el-form-item :label="$t('cpe.id_softwarever')" prop="id_softwarever">
+        <el-input v-model="form.id_softwarever" />
+      </el-form-item>
+      <el-form-item :label="$t('cpe.id_platform')" prop="id_platform">
+        <el-input v-model="form.id_platform" />
+      </el-form-item>
+    </el-form>
+
+    <br>
+    <div class="upgrade-title">{{ $t('upgrade.upgradetitle') }}</div>
+    <el-upload
+      ref="uploadfirmware"
+      class="upload-demo"
+      :multiple="false"
+      action="http://127.0.0.1:8080/doc/upload"
+      :http-request="customUpload"
+      :on-success="handleSuccess"
+      :file-list="firmwarefileList"
+      :auto-upload="false"
+      :limit="1"
+    >
+      <el-button slot="trigger" style="margin-left: 40px;" size="middle" type="primary" :disabled="submitpermission">{{ $t('global.selectfile') }}</el-button>
+      <span> ==></span>
+      <el-button style="margin-left: 10px;" size="middle" type="success" :disabled="submitpermission" @click="submitUploadfimware">{{ $t('global.uploadfile') }}</el-button>
+      <span> ==></span>
+      <el-button style="margin-left: 10px;" size="middle" type="warning" :disabled="submitpermission" @click="submitupgrade">{{ $t('upgrade.upgrade') }}</el-button>
+    </el-upload>
+
+    <br>
+    <br>
+    <div class="upgrade-title">{{ $t('upgrade.upgradeStatus') }}</div>
+    <el-steps style="margin-left: 35px;" :space="300" :active="activestep" process-status="processstatus" finish-status="success">
+      <el-step :title="$t('upgrade.statusupload')" />
+      <el-step :title="$t('upgrade.statusupgrading')" />
+      <el-step :title="$t('upgrade.statusreboot')" />
+      <el-step :title="$t('upgrade.statuscomplete')" />
+    </el-steps>
+  </div>
+</template>
 
 <script>
-import { setoui, getdatapath2id, getparametervalues } from '@/api/cpe'
+import { getparameters, uploadfile, upgrade, queryupgradestatus } from '@/api/cpe'
+import checkPermission from '@/utils/permission'
 
 export default {
-  name: 'Acs',
+  name: 'Factory',
 
   data: function() {
     return {
       loading: true,
+      firmwarefilename: '',
+      firmwarefileList: [],
+      activestep: 0,
+      processstatus: 'wait',
       form: {
-        modelname: '',
-        manufacturer: '',
-        oui: '',
-        serialnumber: '',
-        productclass: '',
-        hardwarever: '',
-        softwarever: '',
-        platform: ''
-      }
+        id_softwarever: '',
+        id_platform: ''
+      },
+      timerid: '',
+      querycount: 0,
+      submitpermission: !checkPermission(['admin', 'operator'])
     }
   },
 
@@ -97,32 +74,76 @@ export default {
   },
 
   methods: {
-    getvalues() {
+    async getvalues() {
       this.loading = true
-      const getparams = [
-        'id_oui',
-        'id_modelname',
-        'id_manufacturer',
-        'id_serialnumber',
-        'id_productclass',
-        'id_hardwarever',
-        'id_softwarever',
-        'id_platform'
-      ]
-      getparametervalues(getparams).then(res => {
-        const retdata = getdatapath2id(res.data)
-        this.form.modelname = retdata.id_modelname
-        this.form.manufacturer = retdata.id_manufacturer
-        this.form.oui = retdata.id_oui
-        this.form.serialnumber = retdata.id_serialnumber
-        this.form.productclass = retdata.id_productclass
-        this.form.hardwarever = retdata.id_hardwarever
-        this.form.softwarever = retdata.id_softwarever
-        this.form.platform = retdata.id_platform
-        this.loading = false
-        setoui(this.form.oui)
+      const ret = await getparameters(this.form)
+      if (!ret) {
+        this.$message.error(this.$t('global.fetchfail'))
+      }
+
+      this.loading = false
+    },
+
+    async getupgradestatus() {
+      queryupgradestatus().then(response => {
+        console.log(response)
+        // check status
+        const status = response.data.status
+        if (status === 'complete') {
+          this.activestep = 3
+          this.processstatus = 'success'
+          clearInterval(this.timerid)
+        } else if (status === 'fail') {
+          this.processstatus = 'error'
+          clearInterval(this.timerid)
+          this.$message.error(this.$t('global.upgradefail') + ': Device return fail')
+        } else {
+          this.querycount++
+          if (this.querycount++ > 180) {
+            this.processstatus = 'error'
+            clearInterval(this.timerid)
+            console.log('upgrade timeout ')
+            this.$message.error(this.$t('global.upgradefail') + ': upgrade timeout')
+          }
+        }
+      }, err => { // response
+        // assume device enter reboot
+        console.log('error in getupgradestatus ' + err)
+        this.activestep = 2
+        this.processstatus = 'process'
+      })
+    },
+
+    customUpload(file) {
+      uploadfile(file, 'firmware').then(response => {
+        console.log(response)
       }, err => {
-        this.$message.error(err)
+        console.log('error in upload file ' + err)
+        this.processstatus = 'error'
+        this.$message.error(this.$t('global.upgradefail'))
+      })
+    },
+
+    handleSuccess(res, file) {
+      this.firmwarefilename = file.name
+      this.activestep = 1
+      this.processstatus = 'process'
+    },
+
+    submitUploadfimware() {
+      this.$refs.uploadfirmware.submit()
+      this.activestep = 0
+      this.processstatus = 'process'
+    },
+
+    submitupgrade() {
+      upgrade(this.firmwarefilename).then(() => {
+        // query progress
+        this.querycount = 0
+        this.timerid = setInterval(function() { this.getupgradestatus() }, 10000)
+      }, err => {
+        console.log('error in upgrade ' + err)
+        this.$message.error(this.$t('global.upgradefail'))
       })
     }
   }
@@ -130,15 +151,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.acs {
+.upgrade {
   &-container {
-    margin: 5px;
-    width: 60%;
+    margin: 50px;
+    width: 38%;
+  }
+  &-title {
+    font-size: 25px;
+    line-height: 25px;
+    margin:15px 5px 25px 15px;
   }
   &-text {
-    font-size: 20px;
-    line-height: 30px;
-    margin: 5px;
+    font-size: 16px;
+    line-height: 15px;
+    margin:5px 5px 5px 10px;
   }
 }
 </style>

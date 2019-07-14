@@ -6,15 +6,19 @@
           <el-form-item :label="$t('cpe.id_hemsurl')" prop="id_hemsurl">
             <el-input v-model="hemsform.id_hemsurl" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_hemsuser')" prop="id_hemsuser">
             <el-input v-model="hemsform.id_hemsuser" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_hemspassword')" prop="id_hemspassword">
             <el-input v-model="hemsform.id_hemspassword" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_secgwaddr')" prop="id_secgwaddr">
             <el-input v-model="hemsform.id_secgwaddr" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_perinformflg')" prop="id_perinformflg">
             <el-switch
               v-model="hemsform.id_perinformflg"
@@ -24,17 +28,21 @@
               inactive-value="0"
             />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_perinforminterv')" prop="id_perinforminterv">
             <el-input v-model.number="hemsform.id_perinforminterv" />
           </el-form-item>
+
           <el-button type="primary" :disabled="submitpermission" class="acs-text" @click="submithemsForm">{{ $t('global.submit') }}</el-button>
         </el-form>
       </el-tab-pane>
+
       <el-tab-pane :label="$t('acs.clienttitle')" name="cpe">
         <el-form id="cpe" ref="cpeform" :model="cpeform" :rules="rules" label-width="250px" size="small">
           <el-form-item :label="$t('cpe.id_cpeconnurl')" prop="id_cpeconnurl">
             <el-input v-model="cpeform.id_cpeconnurl" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cpeconnauthflg')" prop="id_cpeconnauthflg">
             <el-switch
               v-model="cpeform.id_cpeconnauthflg"
@@ -44,15 +52,19 @@
               inactive-value="0"
             />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cpeconnuser')" prop="id_cpeconnuser">
             <el-input v-model="cpeform.id_cpeconnuser" />
           </el-form-item>
+
           <el-form-item :label="$t('cpe.id_cpeconnpassword')" prop="id_cpeconnpassword">
             <el-input v-model="cpeform.id_cpeconnpassword" />
           </el-form-item>
+
           <el-button type="primary" :disabled="submitpermission" class="acs-text" @click="submitcpeForm">{{ $t('global.submit') }}</el-button>
         </el-form>
       </el-tab-pane>
+
       <el-tab-pane :label="$t('acs.securitytitle')" name="security">
         <el-form id="security" ref="securityform" :model="securityform" :rules="rules" label-width="200px" size="small">
           <el-form-item :label="$t('cpe.id_cpeconntlsver')" prop="id_cpeconntlsver">
@@ -64,6 +76,7 @@
               />
             </el-select>
           </el-form-item>
+
           <el-button type="primary" :disabled="submitpermission" class="acs-text" @click="submitsecurityForm">{{ $t('global.submit') }}</el-button>
         </el-form>
       </el-tab-pane>

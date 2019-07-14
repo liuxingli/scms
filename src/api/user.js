@@ -142,12 +142,11 @@ export function deleteuser(data) {
   queryusers request data example :
   {
     url: '/user/query',
-    method: 'get',
+    method: 'post',
   }
 
   queryuser response data example :
   {
-    url: '/user/add',
     code: 20000,
     data:
     [{ roles: ['admin'], username: 'admin', password: '111111' },
@@ -159,5 +158,62 @@ export function queryusers() {
   return request({
     url: '/user/query',
     method: 'post'
+  })
+}
+
+/**
+  query auth config :
+  {
+    url: '/user/getauthcfg',
+    method: 'post',
+  }
+
+  getauthcfg response data example :
+  {
+    code: 20000,
+    data: { sessionlife: '1800',
+            loginattempnum: '5',
+            passwordlocktime: '5',
+            passwordresuse: '5',
+            passwordlifedays: '3',
+            passwordgracedays: '5',
+            passwordminlen: '6',
+            passwordcomplexity: '3'
+          }
+  }
+*/
+export function getauthcfg() {
+  return request({
+    url: '/user/getauthcfg',
+    method: 'post'
+  })
+}
+
+/**
+  save auth config :
+  {
+    url: '/user/saveauthcfg',
+    method: 'post',
+    data: { sessionlife: '1800',
+            loginattempnum: '5',
+            passwordlocktime: '5',
+            passwordresuse: '5',
+            passwordlifedays: '3',
+            passwordgracedays: '5',
+            passwordminlen: '6',
+            passwordcomplexity: '3'
+          }
+  }
+
+  save auth config response data example :
+  {
+    code: 20000
+  }
+*/
+export function saveauthcfg(data) {
+  return request({
+    url: '/user/saveauthcfg',
+    method: 'post',
+    data
   })
 }

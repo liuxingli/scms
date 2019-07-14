@@ -146,9 +146,198 @@ const devicevalues = new Map([
   ['Device.X_D837BE_DebugMgmt.Upload.PeriodicUploadPolicy', 'VendorTraces'],
   ['Device.X_D837BE_DebugMgmt.Upload.UploadPolicyWhenMaxExceeded', 'DeviceLog'],
   ['Device.X_D837BE_DebugMgmt.Upload.UploadPolicyWhenAlarmRaised', 'KernelLog,CpulKernelLog'],
-  ['Device.X_D837BE_DebugMgmt.Upload.UploadPolicyWhenPowerOn', 'DeviceLog,VendorTraces,CoreDumps,TmpFileList,VarLog,FsmLog,StrongwanLog']
+  ['Device.X_D837BE_DebugMgmt.Upload.UploadPolicyWhenPowerOn', 'DeviceLog,VendorTraces,CoreDumps,TmpFileList,VarLog,FsmLog,StrongwanLog'],
+
+  ['Device.FAP.PerfMgmt.Config.1.Enable', '1'],
+  ['Device.FAP.PerfMgmt.Config.1.URL', 'ftp://192.168.0.101'],
+  ['Device.FAP.PerfMgmt.Config.1.Username', 'admin'],
+  ['Device.FAP.PerfMgmt.Config.1.Password', 'pmtester'],
+  ['Device.FAP.PerfMgmt.Config.1.PeriodicUploadInterval', '900'],
+
+  ['Device.Security.WatchdogEnable', '0']
 
 ])
+
+const devicetreedata = {
+  'meta': {
+    'path': 'Device.',
+    'type': 'object',
+    'cType': 'STRUCT'
+  },
+  'val': [
+    {
+      'meta': {
+        'path': 'Device.RootDataModelVersion',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '32'
+      },
+      'val': '2.7',
+      'flag': 1
+    },
+    {
+      'meta': {
+        'path': 'Device.X_D837BE_VendorDataModelVersion',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '32'
+      },
+      'val': '43713',
+      'flag': 1
+    },
+    {
+      'meta': {
+        'path': 'Device.ManagementServer.',
+        'type': 'object',
+        'cType': 'STRUCT'
+      },
+      'val': null,
+      'flag': 2
+    },
+    {
+      'meta': {
+        'path': 'Device.LogMgmt.',
+        'type': 'object',
+        'cType': 'STRUCT'
+      },
+      'val': null,
+      'flag': 3
+    }
+  ],
+  'flag': 2
+}
+
+const managerdata = {
+  'meta': {
+    'path': 'Device.ManagementServer.',
+    'type': 'object',
+    'cType': 'STRUCT'
+  },
+  'val': [
+    {
+      'meta': {
+        'path': 'Device.ManagementServer.EnableCWMP',
+        'type': 'boolean',
+        'cType': 'BOOL8',
+        'range': ''
+      },
+      'val': '1',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.ManagementServer.URL',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.ManagementServer.Username',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.ManagementServer.Password',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.ManagementServer.X_D837BE_lastConnectedURL',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.ManagementServer.X_D837BE_Interface',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    }
+  ],
+  'flag': 2
+}
+
+const mgmtdata = {
+  'meta': {
+    'path': 'Device.LogMgmt.',
+    'type': 'object',
+    'cType': 'STRUCT'
+  },
+  'val': [
+    {
+      'meta': {
+        'path': 'Device.LogMgmt.URL',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.LogMgmt.Username',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.LogMgmt.Password',
+        'type': 'string',
+        'cType': 'INT8[]',
+        'range': '256'
+      },
+      'val': '',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.LogMgmt.PeriodicUploadEnable',
+        'type': 'boolean',
+        'cType': 'BOOL8',
+        'range': ''
+      },
+      'val': '0',
+      'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.LogMgmt.PeriodicUploadInterval',
+        'type': 'unsignedInt',
+        'cType': 'UINT32',
+        'range': '[1:]'
+      },
+      'val': '3600',
+      'flag': 3
+    }
+  ],
+  'flag': 3
+}
 
 export default [
   {
@@ -192,6 +381,36 @@ export default [
         return {
           code: 20000,
           data: retdata
+        }
+      }
+    }
+  },
+
+  {
+    url: '/cpe/getdbtree',
+    type: 'post',
+    response: config => {
+      const path = config.body.path
+
+      if (path === 'Device.') {
+        return {
+          code: 20000,
+          data: devicetreedata
+        }
+      } else if (path === 'Device.ManagementServer.') {
+        return {
+          code: 20000,
+          data: managerdata
+        }
+      } else if (path === 'Device.LogMgmt.') {
+        return {
+          code: 20000,
+          data: mgmtdata
+        }
+      } else {
+        return {
+          code: 20000,
+          data: {}
         }
       }
     }

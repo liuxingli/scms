@@ -149,8 +149,15 @@ const idmap = new Map([
   ['id_upload_periodic', 'Device.X_DebugMgmt.Upload.PeriodicUploadPolicy'],
   ['id_upload_maxexceed', 'Device.X_DebugMgmt.Upload.UploadPolicyWhenMaxExceeded'],
   ['id_upload_alarm', 'Device.X_DebugMgmt.Upload.UploadPolicyWhenAlarmRaised'],
-  ['id_upload_poweron', 'Device.X_DebugMgmt.Upload.UploadPolicyWhenPowerOn']
+  ['id_upload_poweron', 'Device.X_DebugMgmt.Upload.UploadPolicyWhenPowerOn'],
 
+  ['id_pm_enable', 'Device.FAP.PerfMgmt.Config.1.Enable'],
+  ['id_pm_url', 'Device.FAP.PerfMgmt.Config.1.URL'],
+  ['id_pm_username', 'Device.FAP.PerfMgmt.Config.1.Username'],
+  ['id_pm_password', 'Device.FAP.PerfMgmt.Config.1.Password'],
+  ['id_pm_interval', 'Device.FAP.PerfMgmt.Config.1.PeriodicUploadInterval'],
+
+  ['id_hwwatchdog_enable', 'Device.Security.WatchdogEnable']
 ])
 
 // the oui of device,oui should be get from device firstly
@@ -231,88 +238,6 @@ export async function getparameters(parameters) {
   return result
 }
 
-export function getparametersA(parameters) {
-  let result = true
-  // get oui if does not exist
-  if (!cpe_oui) {
-    const ouipath = [{ path: 'Device.DeviceInfo.ManufacturerOUI' }]
-    getparametervalues(ouipath).then(res => {
-      let ouiflg = false
-      for (const dataitem of res.data) {
-        // find id for path
-        for (var [key, value] of idmap) {
-          if (value === dataitem.path) {
-            if (key === 'id_oui') {
-              cpe_oui = dataitem.value
-              ouiflg = true
-            }
-            break
-          }
-        }
-      }
-
-      // to get other parameters
-      if (ouiflg) {
-        const pathdata = []
-        for (const elname in parameters) {
-          if (idmap.has(elname)) {
-            const pathstr = idmap.get(elname).replace(/.X_/g, '.X_' + cpe_oui + '_')
-            pathdata.push({ path: pathstr })
-          } else {
-            console.log('undefined id: %s', elname)
-          }
-        }
-
-        getparametervalues(pathdata).then(res => {
-          for (const dataitem of res.data) {
-            // find id for path
-            for (const [id, path] of idmap) {
-              const newpath = path.replace(/.X_/g, '.X_' + cpe_oui + '_')
-              if (newpath === dataitem.path) {
-                parameters[id] = dataitem.value
-                break
-              }
-            }
-          }
-        }, err => {
-          result = false
-          console.log('error in getparameters without oui ' + err)
-        })
-      }
-    }, err => {
-      result = false
-      console.log('failed to get OUI:' + err)
-    })
-  } else { // if oui is exist, get the parameters
-  // convert from id to path
-    const pathdata = []
-    for (const elname in parameters) {
-      if (idmap.has(elname)) {
-        const pathstr = idmap.get(elname).replace(/.X_/g, '.X_' + cpe_oui + '_')
-        pathdata.push({ path: pathstr })
-      } else {
-        console.log('undefined id: %s', elname)
-      }
-    }
-
-    getparametervalues(pathdata).then(res => {
-      for (const dataitem of res.data) {
-        for (const [id, path] of idmap) {
-          const newpath = path.replace(/.X_/g, '.X_' + cpe_oui + '_')
-          if (newpath === dataitem.path) {
-            parameters[id] = dataitem.value
-            break
-          }
-        }
-      }
-    }, err => {
-      result = false
-      console.log('error in getparameters ' + err)
-    })
-  }
-  return result
-}
-
 /* helper func for setparametersvalues, user should call this func instead of setparametervalues
    the example of input data
    {
@@ -374,6 +299,7 @@ export async function filedownload(filename) {
 }
 
 /* Following are the API func between Web and Server */
+/* ************************************************* */
 
 /**
   getparametervalues request data example :
@@ -551,7 +477,7 @@ export function ping(dst) {
 /**
   getdbtree request data example :
   {
-    url: '/cpe/getdevicedbtree',
+    url: '/cpe/getdbtree',
     method: 'post',
     data: {
       isinternal: false,
@@ -642,7 +568,7 @@ export function getlogdumpfilelist() {
 /**
   downloadfile request data example :
   {
-    url: '/cpe/download',
+    url: '/cpe/downloadfile',
     method: 'post',
     data: 'pslog.tgz'
   }
@@ -652,9 +578,84 @@ export function getlogdumpfilelist() {
 */
 export function downloadfile(data) {
   return request({
-    url: '/cpe/download',
+    url: '/cpe/downloadfile',
     method: 'post',
     responseType: 'arraybuffer',
     data
+  })
+}
+
+/**
+  uploadfile request data example :
+  {
+    url: '/cpe/uploadfile',
+    method: 'post',
+    data：
+  }
+  Filetype: 'calibration', 'pdr','pacalibration','logo','firmware',
+            'operatordefault','device','internal','son','cndata'
+*/
+export function uploadfile(fileobj, filetype) {
+  const param = new FormData()
+  param.append('files', fileobj.file)
+  return request({
+    method: 'post',
+    url: '/cpe/uploadfile',
+    headers: { 'Content-Type': 'multipart/form-data', 'UploadFileType': filetype },
+    data: param
+  })
+}
+
+/**
+  deletefile request data example :
+  {
+    url: '/cpe/deletefile',
+    method: 'post',
+    data: 'pslog.tgz'
+  }
+*/
+export function deletefile(filename) {
+  return request({
+    method: 'post',
+    url: '/cpe/deletefile',
+    data: filename
+  })
+}
+
+/**
+  upgrade request data example :
+  {
+    url: '/cpe/download',
+    method: 'post',
+    data: 'pslog.tgz'
+  }
+*/
+export function upgrade(filename) {
+  return request({
+    url: '/cpe/upgrade',
+    method: 'post',
+    data: filename
+  })
+}
+
+/**
+  upgrade request data example :
+  {
+    url: '/cpe/download',
+    method: 'post',
+    data: 'pslog.tgz'
+  }
+
+  status: 'fail','complete','progress'
+  response data example:
+  {
+    code: 20000,
+    data: {status:'fail',message:'file corrupted'}
+  }
+*/
+export function queryupgradestatus() {
+  return request({
+    url: '/cpe/queryupgradestatus',
+    method: 'post'
   })
 }

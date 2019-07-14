@@ -1,7 +1,7 @@
 <template>
-  <div class="fm-container">
-    <div class="fm-text">name: {{ name }}</div>
-    <div class="fm-text">roles: <span v-for="role in roles" :key="role">{{ role }}</span></div>
+  <div class="neighborcell-container">
+    <div class="neighborcell-text">name: {{ name }}</div>
+    <div class="neighborcell-text">roles: <span v-for="role in roles" :key="role">{{ role }}</span></div>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Fm',
+  name: 'Neighborcell',
   computed: {
     ...mapGetters([
       'name',
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fm {
+.neighborcell {
   &-container {
     margin: 30px;
   }

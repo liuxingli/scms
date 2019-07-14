@@ -91,9 +91,9 @@ export const asyncRoutes = [
       },
 
       {
-        path: 'time',
-        component: () => import('@/views/device/time/index'),
-        meta: { title: 'time' }
+        path: 'measurement',
+        component: () => import('@/views/device/measurement/index'),
+        meta: { title: 'measurement' }
       },
 
       {
@@ -115,9 +115,9 @@ export const asyncRoutes = [
       },
 
       {
-        path: 'fm',
-        component: () => import('@/views/device/fm/index'),
-        meta: { title: 'fm' }
+        path: 'neighborcell',
+        component: () => import('@/views/device/neighborcell/index'),
+        meta: { title: 'neighborcell' }
       },
 
       {
