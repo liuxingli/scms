@@ -202,6 +202,53 @@ const devicetreedata = {
       },
       'val': null,
       'flag': 3
+    },
+    {
+      'meta': {
+        'path': 'Device.InterfaceStack.',
+        'type': 'multi',
+        'cType': 'STRUCT',
+        'max': 10
+      },
+      'val': [
+        {
+          'meta': {
+            'path': 'Device.InterfaceStack.1.',
+            'type': 'instance',
+            'instNum': 1
+          },
+          'val': null,
+          'flag': 1
+        },
+        {
+          'meta': {
+            'path': 'Device.InterfaceStack.2.',
+            'type': 'instance',
+            'instNum': 2
+          },
+          'val': null,
+          'flag': 1
+        },
+        {
+          'meta': {
+            'path': 'Device.InterfaceStack.3.',
+            'type': 'instance',
+            'instNum': 3
+          },
+          'val': null,
+          'flag': 1
+        },
+        {
+          'meta': {
+            'path': 'Device.InterfaceStack.4.',
+            'type': 'instance',
+            'instNum': 4
+          },
+          'val': null,
+          'flag': 1
+        }
+      ],
+      'flag': 0
     }
   ],
   'flag': 2

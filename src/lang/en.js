@@ -308,10 +308,26 @@ export default {
     importldbtype: 'Select import DB type'
   },
   tree: {
-    devicetreetitle: 'Tree View of Device datamodel',
+    devicetreetitle: 'Tree View of Device datamodel(Note：Data model tree is lazy loaded,the unloaded data can not be displayed and searched)',
     removefile: 'Remove',
     importldbfile: 'Import DB files',
     exportldbfile: 'Export DB files',
-    importldbtype: 'Select import DB type'
+    importldbtype: 'Select import DB type',
+    emptytext: 'no item matched',
+    subtreedepth: 'Load SubTree depth',
+    expandall: 'ExpandAll',
+    CollapseAll: 'CollapseAll',
+    searchplaceholder: 'Input search keyword',
+    search: 'Search',
+    clearsearch: 'Clear',
+    nodedetail: 'Node details',
+    path: 'Node Path',
+    type: 'Node Type',
+    range: 'Value Range',
+    writeable: 'Writeable',
+    value: 'Value',
+    maxinstance: 'Max instance number',
+    instancenum: 'Instance index',
+    children: 'Children Nodes'
   }
 }

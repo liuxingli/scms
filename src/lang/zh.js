@@ -308,10 +308,26 @@ export default {
     importldbtype: '选择数据模型的类型'
   },
   tree: {
-    devicetreetitle: '设备数据模型树',
-    removefile: 'Remove',
-    importldbfile: 'Import DB files',
-    exportldbfile: 'Export DB files',
-    importldbtype: 'Select import DB type'
+    devicetreetitle: '设备数据模型树(注意：模型树数据是懒加载，每次加载的子树深度可以控制，未加载的数据无法显示和搜索)',
+    removefile: '删除文件',
+    importldbfile: '导入数据模型文件',
+    exportldbfile: '导出数据模型文件',
+    importldbtype: '选择导入数据模型文件类型',
+    emptytext: '无匹配数据',
+    subtreedepth: '加载子树深度',
+    expandall: '全部展开',
+    CollapseAll: '全部收起',
+    searchplaceholder: '输入搜索关键字',
+    search: '搜索',
+    clearsearch: '清除搜索',
+    nodedetail: '数据节点详细信息',
+    path: '节点路径',
+    type: '节点类型',
+    range: '节点数值范围',
+    writeable: '节点可写',
+    value: '节点数值',
+    maxinstance: '最大实例个数',
+    instancenum: '实例索引',
+    children: '子节点'
   }
 }
