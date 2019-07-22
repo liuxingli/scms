@@ -1,66 +1,55 @@
 <template>
   <div id="user">
     <el-row class="line-display">
-      <el-col :span="6" :offset="1">
+      <el-col :span="8" :offset="1">
         <div class="grid-content" style="margin-top:30px;">
           <!-- Create new user -->
           <el-button type="primary" style="float:left;" size="small" @click="dialogCreateVisible = true"> {{ $t("permission.createuser") }}</el-button>
-          <!-- User List-->
-          <el-col :span="6" style="height:20px;" />
-          <el-table
-            v-loading="loading"
-            :data="users"
-            stripe
-            element-loading-text="Loading..."
-            style="width: 100%;margin-top:20px;"
-            @selection-change="tableSelectionChange"
-          >
-            <el-table-column
-              prop="username"
-              :label="$t('permission.username')"
-              width="100"
-            />
-            <el-table-column
-              prop="roles"
-              :label="$t('permission.role')"
-              width="100"
-            />
-            <el-table-column
-              :label="$t('permission.operation')"
-              width="200"
-            >
+
+          <!-- User List for edit and delete -->
+          <el-col :span="7" style="height:20px;" />
+          <el-table v-loading="loading" :data="users" stripe element-loading-text="Loading..." style="width: 100%;margin-top:20px;">
+            <el-table-column prop="username" :label="$t('permission.username')" width="100" />
+            <el-table-column prop="roles" :label="$t('permission.role')" width="100" />
+            <el-table-column prop="status" :label="$t('permission.status')" width="100" />
+            <el-table-column :label="$t('permission.operation')" width="200">
               <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  @click="setCurrent(scope.row)"
-                >{{ $t("permission.edit") }}</el-button>
-                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="removeUser(scope.row)"
-                >{{ $t("permission.delete") }}</el-button>
+                <el-button size="mini" @click="setCurrent(scope.row)">{{ $t("permission.edit") }}</el-button>
+                <el-button size="mini" type="danger" @click="removeUser(scope.row)">{{ $t("permission.delete") }}</el-button>
               </template>
             </el-table-column>
           </el-table>
-          <div style=" width:100%; ovflow:hidden; height:40px;" />
         </div>
       </el-col>
     </el-row>
 
     <!-- Create new user begin-->
     <el-dialog width="30%" :visible.sync="dialogCreateVisible" :title="$t('permission.createuser')" :close-on-click-modal="false" :close-on-press-escape="false" @close="reset">
-      <el-form id="#create" ref="create" :model="create" :rules="rules" label-width="100px">
+      <el-form id="#create" ref="create" :model="create" :rules="rules" label-width="150px">
         <el-form-item :label="$t('permission.username')" prop="username">
-          <el-input v-model="create.username" />
+          <el-input v-model="create.username" size="small" />
         </el-form-item>
+
         <el-form-item :label="$t('permission.password')" prop="password">
-          <el-input v-model="create.password" type="password" show-password="true" auto-complete="off" />
+          <el-input v-model="create.password" type="password" show-password auto-complete="off" size="small" />
         </el-form-item>
-        <el-form-item :label="$t('permission.newpassword')" prop="checkPass">
-          <el-input v-model="create.checkPass" type="password" show-password="true" />
+
+        <el-form-item :label="$t('permission.confirmpassword')" prop="checkPass">
+          <el-input v-model="create.checkPass" type="password" show-password size="small" />
         </el-form-item>
+
+        <el-form-item :label="$t('permission.status')" prop="status">
+          <el-switch
+            v-model="create.status"
+            :active-text="$t('global.switchon')"
+            :inactive-text="$t('global.switchoff')"
+            active-value="enabled"
+            inactive-value="disabled"
+          />
+        </el-form-item>
+
         <el-form-item :label="$t('permission.role')" prop="roles">
-          <el-select v-model="create.roles" :placeholder="$t('permission.roleplaceholder')">
+          <el-select v-model="create.roles" size="small" :placeholder="$t('permission.roleplaceholder')">
             <el-option :label="$t('permission.admin')" value="admin" />
             <el-option :label="$t('permission.operator')" value="operator" />
             <el-option :label="$t('permission.guest')" value="guest" />
@@ -75,18 +64,31 @@
 
     <!-- Modify user begin-->
     <el-dialog width="30%" :visible.sync="dialogUpdateVisible" :title="$t('permission.modifyuser')" :close-on-click-modal="false" :close-on-press-escape="false">
-      <el-form id="#update" ref="update" :model="update" :rules="modifyrules" label-width="100px">
+      <el-form id="#update" ref="update" :model="update" :rules="modifyrules" label-width="150px">
         <el-form-item :label="$t('permission.username')" prop="name">
-          <el-input v-model="update.username" :disabled="true" />
+          <el-input v-model="update.username" :disabled="true" size="small" />
         </el-form-item>
+
         <el-form-item :label="$t('permission.newpassword')" prop="password">
-          <el-input v-model="update.password" type="password" show-password="true" auto-complete="off" />
+          <el-input v-model="update.password" type="password" show-password auto-complete="off" size="small" />
         </el-form-item>
+
         <el-form-item :label="$t('permission.confirmpassword')" prop="checkPass">
-          <el-input v-model="update.checkPass" type="password" show-password="true" />
+          <el-input v-model="update.checkPass" type="password" show-password size="small" />
         </el-form-item>
+
+        <el-form-item :label="$t('permission.status')" prop="status">
+          <el-switch
+            v-model="update.status"
+            :active-text="$t('global.switchon')"
+            :inactive-text="$t('global.switchoff')"
+            active-value="enabled"
+            inactive-value="disabled"
+          />
+        </el-form-item>
+
         <el-form-item :label="$t('permission.role')" prop="roles">
-          <el-select v-model="update.roles" :placeholder="$t('permission.roleplaceholder')">
+          <el-select v-model="update.roles" size="small" :placeholder="$t('permission.roleplaceholder')">
             <el-option :label="$t('permission.admin')" value="admin" />
             <el-option :label="$t('permission.operator')" value="operator" />
             <el-option :label="$t('permission.guest')" value="guest" />
@@ -102,12 +104,12 @@
 </template>
 
 <script>
-import { adduser, modifyuser, deleteuser, queryusers } from '@/api/user'
+import { adduser, modifyuser, deleteuser, queryusers, getauthcfg } from '@/api/user'
 
 export default {
   name: '',
   data: function() {
-    function isSimplePwd(s) {
+    function complexity(s) {
       let ls = 0
       if (s.match(/([a-z])+/)) {
         ls++
@@ -124,44 +126,81 @@ export default {
       return ls
     }
 
-    const validatePass = (rule, value, callback) => {
+    const validatePassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error(this.$t('permission.reinputpassword')))
-      } else if (value !== this.create.password) {
-        callback(new Error(this.$t('permission.unmatchpassword')))
-      } else if (isSimplePwd(value) < 3) {
-        callback(new Error(this.$t('permission.weakpassword')))
+      } else if (complexity(value) < this.securitycfg.passwordcomplexity) {
+        callback(new Error(this.$t('permission.weakpassword') + this.securitycfg.passwordcomplexity))
+      } else if (value.length < this.securitycfg.passwordminlen) {
+        callback(new Error(this.$t('permission.passwordtooshort') + this.securitycfg.passwordminlen))
+      } else if (value.length > 18) {
+        callback(new Error(this.$t('permission.passwordtoolong')))
       } else {
         callback()
       }
     }
 
-    const validateChangePass = (rule, value, callback) => {
+    const validateEditPassword = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(this.$t('permission.reinputpassword')))
-      } else if (value !== this.update.password) {
-        callback(new Error(this.$t('permission.unmatchpassword')))
-      } else if (isSimplePwd(value) < 3) {
-        callback(new Error(this.$t('permission.weakpassword')))
+        callback()
+      } else if (complexity(value) < this.securitycfg.passwordcomplexity) {
+        callback(new Error(this.$t('permission.weakpassword') + this.securitycfg.passwordcomplexity))
+      } else if (value.length < this.securitycfg.passwordminlen) {
+        callback(new Error(this.$t('permission.passwordtooshort') + this.securitycfg.passwordminlen))
+      } else if (value.length > 18) {
+        callback(new Error(this.$t('permission.passwordtoolong')))
       } else {
         callback()
       }
     }
+
+    const validateCreatConfirmPass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('permission.reinputpassword')))
+      } else if (value !== this.create.password) {
+        callback(new Error(this.$t('permission.unmatchpassword')))
+      } else if (complexity(value) < this.securitycfg.passwordcomplexity) {
+        callback(new Error(this.$t('permission.weakpassword') + this.securitycfg.passwordcomplexity))
+      } else {
+        callback()
+      }
+    }
+
+    const validateEditConfirmPass = (rule, value, callback) => {
+      if (value === '' && this.update.password === '') {
+        callback()
+      } else if (value !== this.update.password) {
+        callback(new Error(this.$t('permission.unmatchpassword')))
+      } else if (complexity(value) < this.securitycfg.passwordcomplexity) {
+        callback(new Error(this.$t('permission.weakpassword') + this.securitycfg.passwordcomplexity))
+      } else {
+        callback()
+      }
+    }
+
     return {
       usernamelabel: this.$t('permission.username'),
       users: [],
+
       create: {
         username: '',
         roles: '',
+        status: '',
         password: '',
         checkPass: ''
       },
-      currentId: '',
+
       update: {
         username: '',
         roles: '',
+        status: '',
         password: '',
         checkPass: ''
+      },
+
+      securitycfg: {
+        passwordminlen: '',
+        passwordcomplexity: ''
       },
 
       rules: {
@@ -187,9 +226,7 @@ export default {
           message: this.$t('permission.passwordplaceholder'),
           trigger: 'blur'
         }, {
-          min: 6,
-          max: 25,
-          message: this.$t('permission.usernamelenhint')
+          validator: validatePassword
         }],
 
         checkPass: [{
@@ -197,18 +234,13 @@ export default {
           message: this.$t('permission.reinputpassword'),
           trigger: 'blur'
         }, {
-          validator: validatePass
+          validator: validateCreatConfirmPass
         }]
       },
+
       modifyrules: {
         password: [{
-          required: true,
-          message: this.$t('permission.passwordplaceholder'),
-          trigger: 'blur'
-        }, {
-          min: 6,
-          max: 25,
-          message: this.$t('permission.usernamelenhint')
+          validator: validateEditPassword
         }],
 
         roles: [{
@@ -219,49 +251,60 @@ export default {
         ],
 
         checkPass: [{
-          required: true,
-          message: this.$t('permission.reinputpassword'),
-          trigger: 'blur'
-        }, {
-          validator: validateChangePass
+          validator: validateEditConfirmPass
         }]
       },
       loading: true,
-      selected: [],
       dialogCreateVisible: false,
       dialogUpdateVisible: false,
       createLoading: false,
       updateLoading: false
     }
   },
+
   mounted: function() {
+    this.getsecuritycfg()
     this.getUsers()
   },
+
   methods: {
-    tableSelectionChange(val) {
-      this.selected = val
-    },
     // Reset form
     reset() {
       this.$refs.create.resetFields()
     },
+
+    // save current user info for edit
     setCurrent(user) {
       this.update.username = user.username
       this.update.roles = user.prolesone
-      this.update.password = user.password
+      this.update.status = user.status
       this.dialogUpdateVisible = true
     },
+
+    // get security config
+    getsecuritycfg() {
+      this.loading = true
+      getauthcfg().then(res => {
+        this.securitycfg.passwordminlen = res.data.passwordminlen
+        this.securitycfg.passwordcomplexity = res.data.passwordcomplexity
+        this.loading = false
+      }, err => {
+        this.$message.error(this.$t('global.fetchfail'))
+        console.log(err)
+      })
+    },
+
     // Get User list
     getUsers() {
       this.loading = true
       queryusers().then(res => {
         this.users = res.data
         this.loading = false
-        console.log(res)
       }, err => {
         console.log(err)
       })
     },
+
     // Create new user
     createUser() {
       this.$refs.create.validate((valid) => {
@@ -272,6 +315,7 @@ export default {
           newuser.password = this.create.password
           newuser.roles = []
           newuser.roles.push(this.create.roles)
+          newuser.status = this.create.status
           adduser(newuser).then(res => {
             this.$message.success(this.$t('permission.createusersuccess'))
             this.dialogCreateVisible = false
@@ -295,9 +339,13 @@ export default {
           this.updateLoading = true
           const updateuser = {}
           updateuser.username = this.update.username
-          updateuser.password = this.update.password
           updateuser.roles = []
           updateuser.roles.push(this.update.roles)
+          updateuser.status = this.update.status
+          if (this.update.password !== '') {
+            updateuser.password = this.update.password
+          }
+
           modifyuser(updateuser).then(res => {
             this.$message.success(this.$t('permission.modifyusersuccess'))
             this.dialogUpdateVisible = false
@@ -312,6 +360,7 @@ export default {
         }
       })
     },
+
     // Remove one user
     removeUser(user) {
       this.$confirm(this.$t('permission.deleteuserconfirm') + user.username + '?', '', {

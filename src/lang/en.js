@@ -35,6 +35,10 @@ export default {
     fetchfail: 'Failed to fetch data from server',
     submitsuccess: 'Submit success',
     submitfail: 'Failed to submit data to server',
+    addobjsuccess: 'Add object success',
+    addobjfail: 'Failed to add object',
+    deleteobjsuccess: 'Delete object success',
+    deleteobjfail: 'Failed to delete object',
     upgradefail: 'Failed to do upgrade the firmware',
     filedownloadsuccess: 'File download success',
     filedownloadfail: 'Failed to download from from server',
@@ -57,7 +61,10 @@ export default {
     switchno: 'No'
   },
   navbar: {
-    logOut: 'LogOut'
+    logOut: 'LogOut',
+    changepassword: 'Change Password',
+    changepasswordtitle: 'Change Password',
+    passwordexpirehint: 'Password will expire soon please change your password'
   },
   login: {
     title: 'Login Form',
@@ -208,6 +215,9 @@ export default {
     modifyuser: 'Modify User',
     username: 'UserName',
     role: 'Role',
+    status: 'Status',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
     operation: 'Operation',
     edit: 'Edit',
     delete: 'Delete',
@@ -221,7 +231,10 @@ export default {
     roleplaceholder: 'please select role',
     reinputpassword: 'please input password again',
     unmatchpassword: 'Password unmatch',
-    weakpassword: 'Passwords should contain three types of characters: uppercase, lowercase, numeric and special',
+    weakpassword: 'Passwords should at least contain types(upper, lower, num and symbol):',
+    passwordtooshort: 'Password too short, should >=',
+    passwordtoolong: 'Password too long, should <= 18',
+    passwordlenhint: 'length should be between 6-18 chars',
     usernameplaceholder: 'please input user name',
     usernamelenhint: 'length should be between 5-25 chars',
     createusersuccess: 'Create user successfully',
@@ -308,8 +321,11 @@ export default {
     importldbtype: 'Select import DB type'
   },
   tree: {
-    devicetreetitle: 'Tree View of Device datamodel(Note：Data model tree is lazy loaded,the unloaded data can not be displayed and searched)',
+    devicetreetitle: 'Tree View of Device datamodel(Note：To reduce load delay, data model tree is lazy loaded,the unloaded data can not be displayed and searched)',
+    internaltreetitle: 'Tree View of Internal datamodel(Note：To reduce load delay, data model tree is lazy loaded,the unloaded data can not be displayed and searched)',
     removefile: 'Remove',
+    deleteobj: 'Delete Object',
+    addobj: 'Add Object',
     importldbfile: 'Import DB files',
     exportldbfile: 'Export DB files',
     importldbtype: 'Select import DB type',

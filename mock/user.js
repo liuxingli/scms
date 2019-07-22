@@ -1,15 +1,15 @@
 import Mock from 'mockjs'
 
 const usermap = new Map([
-  ['admin-token', { roles: ['admin'], username: 'admin', password: '111111' }],
-  ['operator-token', { roles: ['operator'], username: 'operator', password: '111111' }],
-  ['guest-token', { roles: ['guest'], username: 'guest', password: '111111' }]
+  ['admin-token', { roles: ['admin'], username: 'admin', password: '111111', status: 'enabled', passwordexpire: '6' }],
+  ['operator-token', { roles: ['operator'], username: 'operator', password: '111111', status: 'disabled' }],
+  ['guest-token', { roles: ['guest'], username: 'guest', password: '111111', status: 'enabled' }]
 ])
 
 export default [
   // user login
   {
-    url: '/user/login',
+    url: '/action/login',
     type: 'post',
     response: config => {
       const { username, password } = config.body
@@ -38,7 +38,7 @@ export default [
 
   // get user info
   {
-    url: '/user/info',
+    url: '/action/getuserinfo',
     type: 'post',
     response: config => {
       const { token } = config.body
@@ -58,9 +58,21 @@ export default [
     }
   },
 
+  // update password
+  {
+    url: '/action/updatepassword',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
+  },
+
   // user logout
   {
-    url: '/user/logout',
+    url: '/action/logout',
     type: 'post',
     response: _ => {
       return {
@@ -72,10 +84,10 @@ export default [
 
   // adduser
   {
-    url: '/user/add',
+    url: '/action/adduser',
     type: 'post',
     response: config => {
-      const { username, password, roles } = config.body
+      const { username, password, roles, status } = config.body
 
       let userexist = false
       for (const value of usermap.values()) {
@@ -93,7 +105,7 @@ export default [
       } else {
         // add user to user map
         const addtoken = Mock.Random.id()
-        usermap.set(addtoken, { roles: roles, username: username, password: password })
+        usermap.set(addtoken, { roles: roles, username: username, password: password, status: status })
 
         return {
           code: 20000,
@@ -105,10 +117,10 @@ export default [
 
   // modifyuser
   {
-    url: '/user/modify',
+    url: '/action/modifyuser',
     type: 'post',
     response: config => {
-      const { username, password, roles } = config.body
+      const { username, password, roles, status } = config.body
 
       let userexist = false
       let token = ''
@@ -127,7 +139,7 @@ export default [
         }
       } else {
         // update user to user map
-        usermap.set(token, { roles: roles, username: username, password: password })
+        usermap.set(token, { roles: roles, username: username, password: password, status: status })
 
         return {
           code: 20000,
@@ -139,7 +151,7 @@ export default [
 
   // deleteyuser
   {
-    url: '/user/delete',
+    url: '/action/deleteuser',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -173,7 +185,7 @@ export default [
 
   // queryusers
   {
-    url: '/user/query',
+    url: '/action/queryusers',
     type: 'post',
     response: _ => {
       return {
@@ -185,7 +197,7 @@ export default [
 
   // getauthcfg
   {
-    url: '/user/getauthcfg',
+    url: '/action/getauthcfg',
     type: 'post',
     response: _ => {
       return {
@@ -206,7 +218,7 @@ export default [
 
   // saveauthcfg
   {
-    url: '/user/saveauthcfg',
+    url: '/action/saveauthcfg',
     type: 'post',
     response: _ => {
       return {

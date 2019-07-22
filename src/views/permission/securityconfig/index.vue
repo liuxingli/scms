@@ -33,7 +33,7 @@
         <el-input v-model="securityform.passwordcomplexity" />
       </el-form-item>
 
-      <el-button type="primary" class="security-text" @click="submitsecurityForm">{{ $t('global.submit') }}</el-button>
+      <el-button type="primary" class="security-text" size="mini" @click="submitsecurityForm">{{ $t('global.submit') }}</el-button>
     </el-form>
   </div>
 </template>
@@ -204,7 +204,6 @@ export default {
       getauthcfg().then(res => {
         this.securityform = res.data
         this.loading = false
-        console.log(res)
       }, err => {
         this.$message.error(this.$t('global.fetchfail'))
         console.log(err)
@@ -216,7 +215,6 @@ export default {
         if (valid) {
           saveauthcfg(this.securityform).then(res => {
             this.$message.success(this.$t('global.submitsuccess'))
-            console.log(res)
           }, err => {
             this.$message.error(this.$t('global.submitfail'))
             console.log(err)
@@ -237,8 +235,8 @@ export default {
     width: 40%;
   }
   &-text {
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 15px;
+    line-height: 15px;
     margin:10px 5px 15px 350px;
   }
 }

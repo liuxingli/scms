@@ -35,6 +35,10 @@ export default {
     fetchfail: '从服务器获取数据失败',
     submitsuccess: '提交数据成功',
     submitfail: '提交数据失败',
+    addobjsuccess: '增加实例成功',
+    addobjfail: '增加实例失败',
+    deleteobjsuccess: '删除实例成功',
+    deleteobjfail: '删除实例失败',
     upgradefail: '执行固件更新失败',
     filedownloadsuccess: '文件下载成功',
     filedownloadfail: '文件下载失败',
@@ -57,7 +61,10 @@ export default {
     switchno: '否'
   },
   navbar: {
-    logOut: '注销登录'
+    logOut: '注销登录',
+    changepassword: '修改密码',
+    changepasswordtitle: '修改密码',
+    passwordexpirehint: '密码即将过期，请修改密码'
   },
   login: {
     title: '系统登录',
@@ -208,6 +215,9 @@ export default {
     modifyuser: '修改账户',
     username: '用户名',
     role: '角色',
+    status: '状态',
+    enabled: '激活',
+    disabled: '未激活',
     operation: '操作',
     edit: '修改',
     delete: '删除',
@@ -221,7 +231,10 @@ export default {
     roleplaceholder: '请选择角色',
     reinputpassword: '请重新输入密码',
     unmatchpassword: '密码不匹配',
-    weakpassword: '密码要包含大写，小写，数字，特殊字符中的三种',
+    weakpassword: '密码要包含大写，小写，数字，特殊字符中最少种类:',
+    passwordtooshort: '密码长度太短，应该大于或者等于',
+    passwordtoolong: '密码长度太长，应该小于等于18个字符',
+    passwordlenhint: '长度应该在6-18个字符',
     usernameplaceholder: '请输入用户名',
     usernamelenhint: '长度应该在5-25个字符',
     createusersuccess: '创建用户成功',
@@ -308,8 +321,11 @@ export default {
     importldbtype: '选择数据模型的类型'
   },
   tree: {
-    devicetreetitle: '设备数据模型树(注意：模型树数据是懒加载，每次加载的子树深度可以控制，未加载的数据无法显示和搜索)',
+    devicetreetitle: '设备数据模型树(注意：为了加快反应速度模型树数据是懒加载，每次加载的子树深度可以控制，未加载的数据无法显示和搜索)',
+    internaltreetitle: '内部数据模型树(注意：为了加快反应速度内部树数据是懒加载，每次加载的子树深度可以控制，未加载的数据无法显示和搜索)',
     removefile: '删除文件',
+    deleteobj: '删除实例',
+    addobj: '增加实例',
     importldbfile: '导入数据模型文件',
     exportldbfile: '导出数据模型文件',
     importldbtype: '选择导入数据模型文件类型',

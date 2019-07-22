@@ -3,7 +3,7 @@ import request from '@/utils/request'
 /**
   login request data example :
   {
-    url: '/user/login',
+    url: '/action/login',
     method: 'post',
     data: {
       username: 'admin'
@@ -29,7 +29,7 @@ import request from '@/utils/request'
  */
 export function login(data) {
   return request({
-    url: '/user/login',
+    url: '/action/login',
     method: 'post',
     data
   })
@@ -38,36 +38,64 @@ export function login(data) {
 /**
   getinfo request data example :
   {
-    url: '/user/info',
+    url: '/action/getuserinfo',
     method: 'get',
     data: 'admin-token'
   }
 
-  getinfo response data example(success) :
+  getinfo response data example(success,psswordhint is optional) :
   {
     code: 20000,
     data: {
       roles: ['admin'],
-      username: 'admin'
+      username: 'admin',
+      passwordexpire: '7'
     }
   }
  */
 export function getInfo(token) {
   return request({
-    url: '/user/info',
+    url: '/action/getuserinfo',
     method: 'post',
     data: { token }
   })
 }
 
 /**
-  getinfo request data example :
+  updatepassword request data example :
   {
-    url: '/user/logout',
+    url: '/action/updatepassword',
+    method: 'get',
+    data: 'newpassword@123'
+  }
+
+  updatepassword response data example(success) :
+  {
+    code: 20000,
+  }
+
+  updatepassword response data example(success) :
+  {
+    code: 20001,
+    message: 'Password should include at least 3 kinds of (uppercase,lowercase,number,symbol) and with minimum length 6'
+  }
+ */
+export function updatepassword(newpassword) {
+  return request({
+    url: '/action/updatepassword',
+    method: 'post',
+    data: newpassword
+  })
+}
+
+/**
+  logout request data example :
+  {
+    url: '/action/logout',
     method: 'post',
   }
 
-  getinfo response data example(success) :
+  logout response data example(success) :
   {
     code: 20000,
     data: 'success'
@@ -75,7 +103,7 @@ export function getInfo(token) {
  */
 export function logout() {
   return request({
-    url: '/user/logout',
+    url: '/action/logout',
     method: 'post'
   })
 }
@@ -83,18 +111,19 @@ export function logout() {
 /**
   adduser request data example :
   {
-    url: '/user/add',
+    url: '/action/adduser',
     method: 'post',
     data: {
       username: 'admin',
       password: '123456',
-      roles: ['admin']
+      roles: ['admin'],
+      status: 'enabled'
     }
   }
 */
 export function adduser(data) {
   return request({
-    url: '/user/add',
+    url: '/action/adduser',
     method: 'post',
     data
   })
@@ -102,19 +131,21 @@ export function adduser(data) {
 
 /**
   modifyuser request data example :
+  password field is optional, if it is not included in data, it means no change
   {
-    url: '/user/modify',
+    url: '/action/modifyuser',
     method: 'put',
     data:{
         username: 'admin',
         password: '123456',
-        roles: ['admin']
+        roles: ['admin'],
+        status: 'enabled'
     }
   }
 */
 export function modifyuser(data) {
   return request({
-    url: '/user/modify',
+    url: '/action/modifyuser',
     method: 'post',
     data
   })
@@ -123,7 +154,7 @@ export function modifyuser(data) {
 /**
   deleteuser request data example :
   {
-    url: '/user/delete',
+    url: '/action/deleteuser',
     method: 'put',
     data:{
         username: 'admin'
@@ -132,7 +163,7 @@ export function modifyuser(data) {
 */
 export function deleteuser(data) {
   return request({
-    url: '/user/delete',
+    url: '/action/deleteuser',
     method: 'post',
     data
   })
@@ -141,7 +172,7 @@ export function deleteuser(data) {
 /**
   queryusers request data example :
   {
-    url: '/user/query',
+    url: '/action/queryusers',
     method: 'post',
   }
 
@@ -149,14 +180,14 @@ export function deleteuser(data) {
   {
     code: 20000,
     data:
-    [{ roles: ['admin'], username: 'admin', password: '111111' },
-     { roles: ['operator'], username: 'operator', password: '111111' },
-     { roles: ['guest'], username: 'guest', password: '111111' }]
+    [{ roles: ['admin'], username: 'admin', status: 'enabled' },
+     { roles: ['operator'], username: 'operator', status: 'disabled' },
+     { roles: ['guest'], username: 'guest', status: 'disabled' }]
   }
 */
 export function queryusers() {
   return request({
-    url: '/user/query',
+    url: '/action/queryusers',
     method: 'post'
   })
 }
@@ -164,7 +195,7 @@ export function queryusers() {
 /**
   query auth config :
   {
-    url: '/user/getauthcfg',
+    url: '/action/getauthcfg',
     method: 'post',
   }
 
@@ -184,7 +215,7 @@ export function queryusers() {
 */
 export function getauthcfg() {
   return request({
-    url: '/user/getauthcfg',
+    url: '/action/getauthcfg',
     method: 'post'
   })
 }
@@ -192,7 +223,7 @@ export function getauthcfg() {
 /**
   save auth config :
   {
-    url: '/user/saveauthcfg',
+    url: '/action/saveauthcfg',
     method: 'post',
     data: { sessionlife: '1800',
             loginattempnum: '5',
@@ -212,7 +243,7 @@ export function getauthcfg() {
 */
 export function saveauthcfg(data) {
   return request({
-    url: '/user/saveauthcfg',
+    url: '/action/saveauthcfg',
     method: 'post',
     data
   })

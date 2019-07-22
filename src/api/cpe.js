@@ -290,7 +290,6 @@ export async function filedownload(filename) {
     } else { // IE10+
       navigator.msSaveBlob(blob, filename)
     }
-
     return true
   } catch (err) {
     console.log('error duing download file:' + filename + ' with err:' + err)
@@ -304,7 +303,7 @@ export async function filedownload(filename) {
 /**
   getparametervalues request data example :
   {
-    url: '/cpe/getparametervalues',
+    url: '/action/getparametervalues',
     method: 'post',
     data: [
       { path: 'Device.ManagementServer.URL' }，
@@ -326,7 +325,7 @@ export async function filedownload(filename) {
 */
 export function getparametervalues(inputdata) {
   return request({
-    url: '/cpe/getparametervalues',
+    url: '/action/getparametervalues',
     method: 'post',
     data: inputdata
   })
@@ -335,7 +334,7 @@ export function getparametervalues(inputdata) {
 /**
   setparametervalues request data example :
   {
-    url: '/cpe/setparametervalues',
+    url: '/action/setparametervalues',
     method: 'post',
     data: [
       { path: 'Device.ManagementServer.URL', value: 'http://192.168.0.100' }，
@@ -358,7 +357,7 @@ export function getparametervalues(inputdata) {
  */
 export function setparametervalues(inputdata) {
   return request({
-    url: '/cpe/setparametervalues',
+    url: '/action/setparametervalues',
     method: 'post',
     data: inputdata
   })
@@ -367,7 +366,7 @@ export function setparametervalues(inputdata) {
 /**
   addobject request data example :
   {
-    url: '/cpe/addobject',
+    url: '/action/addobject',
     method: 'post',
     data:'Device.Routing.Router.'
   }
@@ -381,7 +380,7 @@ export function setparametervalues(inputdata) {
 */
 export function addobject(data) {
   return request({
-    url: '/cpe/addobject',
+    url: '/action/addobject',
     method: 'post',
     data
   })
@@ -390,7 +389,7 @@ export function addobject(data) {
 /**
   deleteobject request data example :
   {
-    url: '/cpe/deleteobject',
+    url: '/action/deleteobject',
     method: 'post',
     data:'Device.Routing.Router.1.'
   }
@@ -403,7 +402,7 @@ export function addobject(data) {
 */
 export function deleteobject(data) {
   return request({
-    url: '/cpe/deleteobject',
+    url: '/action/deleteobject',
     method: 'post',
     data
   })
@@ -412,7 +411,7 @@ export function deleteobject(data) {
 /**
   reboot request data example :
   {
-    url: '/cpe/reboot',
+    url: '/action/reboot',
     method: 'post'
   }
 
@@ -423,7 +422,7 @@ export function deleteobject(data) {
 */
 export function reboot() {
   return request({
-    url: '/cpe/reboot',
+    url: '/action/reboot',
     method: 'post'
   })
 }
@@ -431,7 +430,7 @@ export function reboot() {
 /**
   factoryreset request data example :
   {
-    url: '/cpe/factoryreset',
+    url: '/action/factoryreset',
     method: 'post'
   }
 
@@ -442,7 +441,7 @@ export function reboot() {
 */
 export function factoryreset() {
   return request({
-    url: '/cpe/factoryreset',
+    url: '/action/factoryreset',
     method: 'post'
   })
 }
@@ -450,7 +449,7 @@ export function factoryreset() {
 /**
   ping request data example :
   {
-    url: '/cpe/ping',
+    url: '/action/ping',
     method: 'post',
     data: '192.168.0.201'
   }
@@ -468,7 +467,7 @@ export function factoryreset() {
 */
 export function ping(dst) {
   return request({
-    url: '/cpe/ping',
+    url: '/action/ping',
     method: 'post',
     data: dst
   })
@@ -477,7 +476,7 @@ export function ping(dst) {
 /**
   getdbtree request data example :
   {
-    url: '/cpe/getdbtree',
+    url: '/action/getdbtree',
     method: 'post',
     data: {
       isinternal: false,
@@ -538,7 +537,7 @@ export function ping(dst) {
 */
 export function getdbtree(data) {
   return request({
-    url: '/cpe/getdbtree',
+    url: '/action/getdbtree',
     method: 'post',
     data
   })
@@ -547,7 +546,7 @@ export function getdbtree(data) {
 /**
   getlogdumpfilelist request data example :
   {
-    url: '/cpe/getlogdumpfilelist',
+    url: '/action/getlogdumpfilelist',
     method: 'post',
   }
 
@@ -560,7 +559,7 @@ export function getdbtree(data) {
 */
 export function getlogdumpfilelist() {
   return request({
-    url: '/cpe/getlogdumpfilelist',
+    url: '/action/getlogdumpfilelist',
     method: 'post'
   })
 }
@@ -568,7 +567,7 @@ export function getlogdumpfilelist() {
 /**
   downloadfile request data example :
   {
-    url: '/cpe/downloadfile',
+    url: '/action/downloadfile',
     method: 'post',
     data: 'pslog.tgz'
   }
@@ -578,7 +577,7 @@ export function getlogdumpfilelist() {
 */
 export function downloadfile(data) {
   return request({
-    url: '/cpe/downloadfile',
+    url: '/action/downloadfile',
     method: 'post',
     responseType: 'arraybuffer',
     data
@@ -588,7 +587,7 @@ export function downloadfile(data) {
 /**
   uploadfile request data example :
   {
-    url: '/cpe/uploadfile',
+    url: '/action/uploadfile',
     method: 'post',
     data：
   }
@@ -600,7 +599,7 @@ export function uploadfile(fileobj, filetype) {
   param.append('files', fileobj.file)
   return request({
     method: 'post',
-    url: '/cpe/uploadfile',
+    url: '/action/uploadfile',
     headers: { 'Content-Type': 'multipart/form-data', 'UploadFileType': filetype },
     data: param
   })
@@ -609,7 +608,7 @@ export function uploadfile(fileobj, filetype) {
 /**
   deletefile request data example :
   {
-    url: '/cpe/deletefile',
+    url: '/action/deletefile',
     method: 'post',
     data: 'pslog.tgz'
   }
@@ -617,7 +616,7 @@ export function uploadfile(fileobj, filetype) {
 export function deletefile(filename) {
   return request({
     method: 'post',
-    url: '/cpe/deletefile',
+    url: '/action/deletefile',
     data: filename
   })
 }
@@ -625,14 +624,14 @@ export function deletefile(filename) {
 /**
   upgrade request data example :
   {
-    url: '/cpe/download',
+    url: '/action/download',
     method: 'post',
     data: 'pslog.tgz'
   }
 */
 export function upgrade(filename) {
   return request({
-    url: '/cpe/upgrade',
+    url: '/action/upgrade',
     method: 'post',
     data: filename
   })
@@ -641,7 +640,7 @@ export function upgrade(filename) {
 /**
   upgrade request data example :
   {
-    url: '/cpe/download',
+    url: '/action/download',
     method: 'post',
     data: 'pslog.tgz'
   }
@@ -655,7 +654,7 @@ export function upgrade(filename) {
 */
 export function queryupgradestatus() {
   return request({
-    url: '/cpe/queryupgradestatus',
+    url: '/action/queryupgradestatus',
     method: 'post'
   })
 }

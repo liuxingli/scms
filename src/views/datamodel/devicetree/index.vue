@@ -25,15 +25,16 @@
 
         <el-tree
           ref="mytree"
+          :data="treedata"
           :props="props"
-          :load="loadNode"
           node-key="path"
-          lazy
-          highlight-current="true"
+          accordion
+          highlight-current
           :filter-node-method="filterNode"
-          expand-on-click-node="true"
+          expand-on-click-node
           :empty-text="$t('tree.emptytext')"
           @current-change="handleCurrentNodeChange"
+          @node-click="handleNodeClick"
         />
       </SplitArea>
 
@@ -42,16 +43,16 @@
         <el-col :span="22">
           <el-form id="treedetail" ref="detailform" :model="detailform" label-width="270px" size="small">
             <el-form-item :label="$t('tree.path')" prop="path">
-              <el-input v-model="detailform.path" :disabled="true" />
+              <el-input v-model="detailform.path" />
             </el-form-item>
 
             <el-form-item :label="$t('tree.type')" prop="type">
-              <el-input v-model="detailform.type" :disabled="true" />
+              <el-input v-model="detailform.type" />
             </el-form-item>
 
             <div v-if="detailform.leaf">
               <el-form-item :label="$t('tree.range')" prop="range">
-                <el-input v-model="detailform.range" :disabled="true" />
+                <el-input v-model="detailform.range" />
               </el-form-item>
 
               <div v-if="detailform.writeable">
@@ -66,31 +67,48 @@
               </div>
               <div v-else>
                 <el-form-item :label="$t('tree.value')" prop="val">
-                  <el-input v-model="detailform.val" :disabled="true" />
+                  <el-input v-model="detailform.val" />
                 </el-form-item>
               </div>
             </div>
             <div v-else>
               <div v-if="detailform.type === 'multi'">
                 <el-form-item :label="$t('tree.maxinstance')">
-                  <el-input v-model="detailform.max" :disabled="true" />
+                  <el-col :span="10">
+                    <el-input v-model="detailform.max" />
+                  </el-col>
+                  <div v-if="detailform.writeable && detailform.loaded">
+                    <el-col :span="12" :offset="1">
+                      <el-button type="primary" :disabled="submitpermission" size="small" @click="addobject(detailform.path)">{{ $t('tree.addobj') }}</el-button>
+                    </el-col>
+                  </div>
                 </el-form-item>
               </div>
 
               <div v-if="detailform.type === 'instance'">
                 <el-form-item :label="$t('tree.instancenum')">
-                  <el-input v-model="detailform.instNum" :disabled="true" />
+                  <el-input v-model="detailform.instNum" />
                 </el-form-item>
               </div>
 
               <br>
               <div class="devicetree-text">{{ $t('tree.children') }}</div>
-              <el-form-item v-for="item in detailform.children" :key="item" :label="item.name">
+              <el-form-item v-for="(item,key) in detailform.children" :key="key" :label="item.name">
                 <div v-if="item.leaf">
-                  <el-input v-model="item.val" :disabled="true" />
+                  <el-input v-model="item.val" />
                 </div>
                 <div v-else>
-                  <el-input v-model="item.type" :disabled="true" />
+                  <div v-if="item.type === 'instance' && detailform.writeable">
+                    <el-col :span="10">
+                      <el-input v-model="item.type" />
+                    </el-col>
+                    <el-col :span="12" :offset="1">
+                      <el-button type="primary" :disabled="submitpermission" size="small" @click="deleteobject(item.path)">{{ $t('tree.deleteobj') }}</el-button>
+                    </el-col>
+                  </div>
+                  <div v-else>
+                    <el-input v-model="item.type" />
+                  </div>
                 </div>
               </el-form-item>
             </div>
@@ -102,7 +120,7 @@
 </template>
 
 <script>
-import { getdbtree, setparametervalues } from '@/api/cpe'
+import { getdbtree, setparametervalues, deleteobject } from '@/api/cpe'
 import checkPermission from '@/utils/permission'
 
 export default {
@@ -117,6 +135,22 @@ export default {
         isLeaf: 'leaf'
       },
       submitpermission: !checkPermission(['admin', 'operator']),
+
+      // Init data includes root node only, other nodes added by click
+      treedata: [{
+        name: 'Device',
+        path: 'Device.',
+        type: 'object', // Object,string,unsignedInt,multi,dateTime,boolean,int,instance
+        cType: 'STRUCT', // STRUCT,INT8[],UINT32,BOOL8,UINT16,DATE_TIME_T,CM_HOST_NAME_OR_IP_ADDR_T,UINT32_ENUM,UINT32_BITMAP
+        range: '',
+        instNum: 0, // for instance type only
+        max: 0, // for multi type only
+        writeable: false,
+        val: '',
+        leaf: false,
+        loaded: false,
+        children: []
+      }],
 
       operform: {
         subtreedepth: 1,
@@ -135,76 +169,80 @@ export default {
         val: '',
         leaf: false,
         children: []
-      }
+      },
+
+      currentnodekey: ''
     }
   },
 
   methods: {
-    loadNode(node, resolve) {
-      if (node.level === 0) {
-        return resolve([{
-          name: 'Device',
-          path: 'Device.',
-          type: 'object', // Object,string,unsignedInt,multi,dateTime,boolean,int,instance
-          cType: 'STRUCT', // STRUCT,INT8[],UINT32,BOOL8,UINT16,DATE_TIME_T,CM_HOST_NAME_OR_IP_ADDR_T,UINT32_ENUM,UINT32_BITMAP
-          range: '',
-          instNum: 1, // for instance type only
-          max: 1, // for multi type only
-          writeable: false,
-          val: '',
-          leaf: false,
-          children: []
-        }])
-      } else {
-        // Get child from device
-        const query = { isinternal: false, path: node.data.path, depth: this.operform.subtreedepth }
-        getdbtree(query).then((res) => {
-          console.log('get tree:' + res)
-          // extract childre from res
-          if (res.code === 20000) {
-            const childstr = res.data.val
-            const children = []
-            for (const item of childstr) {
-              const child = {}
-              child.path = item.meta.path
-              const namearr = child.path.split('.')
-              if (namearr[namearr.length - 1] === '') {
-                child.name = namearr[namearr.length - 2]
-                child.leaf = false
-              } else {
-                child.name = namearr[namearr.length - 1]
-                child.leaf = true
-              }
+    getChildrenRecursively(childstr) {
+      const children = []
+      for (const item of childstr) {
+        const child = {}
+        child.path = item.meta.path
+        child.type = item.meta.type
+        child.ctype = item.meta.cType
+        child.range = item.meta.range
+        child.instNum = item.meta.instNum
+        child.max = item.meta.max
+        child.val = item.val
+        child.writeable = (item.flag & 0x2) === 0x2
 
-              child.type = item.meta.type
-              child.ctype = item.meta.cType
-              child.range = item.meta.range
-              child.instNum = item.meta.instNum
-              child.max = item.meta.max
-              child.val = item.val
-              child.writeable = (item.flag & 0x2) === 0x2
-              child.children = []
-              children.push(child)
-            }
-
-            resolve(children)
+        child.children = []
+        const namearr = child.path.split('.')
+        if (namearr[namearr.length - 1] === '') {
+          child.name = namearr[namearr.length - 2]
+          child.leaf = false
+          if (item.val !== null) {
+            child.children = this.getChildrenRecursively(item.val)
+            child.loaded = true
+          } else {
+            child.loaded = false
           }
-        }, err => {
-          console.log('error in loadNode ' + err)
-        })
+        } else {
+          child.name = namearr[namearr.length - 1]
+          child.leaf = true
+        }
 
-        resolve()
+        children.push(child)
+      }
+      return children
+    },
+
+    refereshnode(node) {
+      node.data.loaded = false
+      // Get child from device
+      const query = { isinternal: false, path: node.data.path, depth: this.operform.subtreedepth }
+      getdbtree(query).then((res) => {
+        // extract childre from res
+        if (res.code === 20000) {
+          const childstr = res.data.val
+          const children = this.getChildrenRecursively(childstr)
+          if (children.length > 0) {
+            node.data.loaded = true
+            this.$set(node.data, 'children', children)
+            this.$refs.mytree.updateKeyChildren(node.data.path, children)
+            setTimeout(() => {
+              node.expanded = true
+            }, 100)
+          }
+        }
+      }, err => {
+        console.log('error in refereshnode ' + err)
+      })
+    },
+
+    handleNodeClick(data, node) {
+      // try to load data from server and insert children node to current node
+      if (!data.loaded && !data.leaf) {
+        this.refereshnode(node)
       }
     },
 
     handleCurrentNodeChange(data, node) {
       this.detailform = data
-      this.detailform.children = []
-      for (const item of node.childNodes) {
-        this.detailform.children.push(item.data)
-      }
-
-      console.log(node)
+      this.currentnodekey = this.$refs.mytree.getCurrentKey()
     },
 
     filterNode(value, data) {
@@ -220,6 +258,7 @@ export default {
     Clearsearch() {
       this.operform.filterText = ''
       this.$refs.mytree.filter(this.operform.filterText)
+      this.$refs.mytree.setCurrentKey(this.currentnodekey)
     },
 
     expandall() {
@@ -253,6 +292,18 @@ export default {
           return false
         }
       })
+    },
+
+    deleteobject(path) {
+      this.loading = true
+      deleteobject(path).then(() => {
+        const optnode = this.$refs.mytree.getNode(this.currentnodekey)
+        this.refereshnode(optnode)
+        this.$message.success(this.$t('global.deleteobjsuccess'))
+      }, err => {
+        this.$message.error(this.$t('global.deleteobjfail') + err)
+      })
+      this.loading = false
     }
 
   }

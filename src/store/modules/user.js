@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { Message } from 'element-ui'
 
 const state = {
   token: getToken(),
@@ -46,11 +47,23 @@ const actions = {
           reject('Verification failed, please Login again.')
         }
 
-        const { roles, username } = data
+        const { roles, username, passwordexpire } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
+        }
+
+        if (typeof (passwordexpire) !== 'undefined') {
+          const leftdays = parseInt(passwordexpire)
+
+          if (!isNaN(leftdays) && leftdays < 10) {
+            Message({
+              message: 'Password will expire in ' + passwordexpire + ' days,please change your password',
+              type: 'warning',
+              duration: 5 * 1000
+            })
+          }
         }
 
         commit('SET_ROLES', roles)
