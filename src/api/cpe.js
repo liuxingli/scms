@@ -271,10 +271,11 @@ export function setparameters(parameters) {
   return result
 }
 
-export async function filedownload(filename) {
+export async function filedownload(type, filename) {
   try {
+    console.log('type:' + type)
     console.log('filename:' + filename)
-    const res = await downloadfile(filename)
+    const res = await downloadfile(type, filename)
     console.log('res:' + res)
 
     const blob = new Blob([res.data])
@@ -351,7 +352,7 @@ export function getparametervalues(inputdata) {
   The fail message is same for all the APIs, but with different code and message
   setparametervalues response data example(fail with code) :
   {
-    code: 9001,
+    code: 20001,
     message: 'Invalid parateter path.'
   }
  */
@@ -368,7 +369,7 @@ export function setparametervalues(inputdata) {
   {
     url: '/action/addobject',
     method: 'post',
-    data:'Device.Routing.Router.'
+    data: {path:'Device.Routing.Router.'}
   }
 
   addobject response data example(success) :
@@ -376,13 +377,12 @@ export function setparametervalues(inputdata) {
     code: 20000,
     data: {instancenumber: 3}
   }
-
 */
-export function addobject(data) {
+export function addobject(pathval) {
   return request({
     url: '/action/addobject',
     method: 'post',
-    data
+    data: { path: pathval }
   })
 }
 
@@ -391,20 +391,19 @@ export function addobject(data) {
   {
     url: '/action/deleteobject',
     method: 'post',
-    data:'Device.Routing.Router.1.'
+    data:{ path:'Device.Routing.Router.1.'}
   }
 
   deleteobject response data example(success) :
   {
     code: 20000
   }
-
 */
-export function deleteobject(data) {
+export function deleteobject(pathval) {
   return request({
     url: '/action/deleteobject',
     method: 'post',
-    data
+    data: { path: pathval }
   })
 }
 
@@ -451,7 +450,7 @@ export function factoryreset() {
   {
     url: '/action/ping',
     method: 'post',
-    data: '192.168.0.201'
+    data: {dstip: '192.168.0.201'}
   }
 
   ping response data example(success) :
@@ -469,7 +468,7 @@ export function ping(dst) {
   return request({
     url: '/action/ping',
     method: 'post',
-    data: dst
+    data: { dstip: dst }
   })
 }
 
@@ -507,16 +506,6 @@ export function ping(dst) {
               "range": ""
             },
             "val": "1",
-            "flag": 3
-          },
-          {
-            "meta": {
-              "path": "Device.Security.X_D837BE_Psk.1.Encoding",
-              "type": "string",
-              "cType": "UINT32_ENUM",
-              "range": "ASCII,Hex,Base64"
-            },
-            "val": "ASCII",
             "flag": 3
           },
           {
@@ -568,19 +557,28 @@ export function getlogdumpfilelist() {
   downloadfile request data example :
   {
     url: '/action/downloadfile',
-    method: 'post',
-    data: 'pslog.tgz'
+    method: 'get',
+    params: {
+            type: device,
+            filename: device.xml
+          }
   }
+
+  Filetype: 'calibration', 'pdr','pacalibration','logo','firmware',
+            'operatordefault','device','internal','son','cndata','log'
 
   the header of response should be
   headers['content-type'] === 'application/octet-stream;charset=utf-8'
+  headers['Content-Disposition'] === "attachment;filename=device.xml"
 */
-export function downloadfile(data) {
+export function downloadfile(type, filename) {
   return request({
     url: '/action/downloadfile',
-    method: 'post',
-    responseType: 'arraybuffer',
-    data
+    method: 'get',
+    params: {
+      type: type,
+      filename: filename
+    }
   })
 }
 
@@ -610,46 +608,48 @@ export function uploadfile(fileobj, filetype) {
   {
     url: '/action/deletefile',
     method: 'post',
-    data: 'pslog.tgz'
+    data: {filename:'pslog.tgz'}
   }
 */
 export function deletefile(filename) {
   return request({
     method: 'post',
     url: '/action/deletefile',
-    data: filename
+    data: { filename: filename }
   })
 }
 
 /**
   upgrade request data example :
   {
-    url: '/action/download',
+    url: '/action/upgrade',
     method: 'post',
-    data: 'pslog.tgz'
+    data: {filename:'firmware1.0.tgz'}
   }
 */
 export function upgrade(filename) {
   return request({
     url: '/action/upgrade',
     method: 'post',
-    data: filename
+    data: { filename: filename }
   })
 }
 
 /**
-  upgrade request data example :
+  queryupgradestatus request data example :
   {
-    url: '/action/download',
-    method: 'post',
-    data: 'pslog.tgz'
+    url: '/action/queryupgradestatus',
+    method: 'post'
   }
 
   status: 'fail','complete','progress'
+  if status is fail, message is also attached
   response data example:
   {
     code: 20000,
-    data: {status:'fail',message:'file corrupted'}
+    data: { status:'fail',
+            message:'file corrupted'
+          }
   }
 */
 export function queryupgradestatus() {

@@ -1,8 +1,8 @@
 <template>
   <div class="exportdb-container">
     <div class="exportdb-title">{{ $t('db.exportldbfile') }}</div>
-    <el-form id="dump" ref="dumpcalifilelist" :model="dumpcaliform" label-width="150px" size="mini">
-      <el-form-item v-for="item in dumpcaliform.dumpcalifilelist" :key="item" :label="item">
+    <el-form id="dump" ref="dumpcalifilelist" :model="exportdbform" label-width="150px" size="mini">
+      <el-form-item v-for="item in exportdbform.dbfilelist" :key="item" :label="item">
         <el-button type="primary" :disabled="submitpermission" class="debug-dump" @click="downloadclick(item)">{{ $t('global.exportfile') }}</el-button>
       </el-form-item>
     </el-form>
@@ -20,16 +20,25 @@ export default {
     return {
       loading: true,
 
-      dumpcaliform: {
-        dumpcalifilelist: ['Device.xml', 'Internal.xml', 'SON_DM.xml']
+      exportdbform: {
+        dbfilelist: ['Device.xml', 'Internal.xml', 'SON_DM.xml']
       },
       submitpermission: !checkPermission(['admin', 'operator'])
     }
   },
 
   methods: {
+    // Filetype: 'calibration', 'pdr','pacalibration','logo','firmware',
+    //      'operatordefault','device','internal','son','cndata','log'
     downloadclick(filename) {
-      if (!downloadfile(filename)) {
+      let type = 'device'
+      if (filename === 'Internal.xml') {
+        type = 'internal'
+      } else if (filename === 'SON_DM.xml') {
+        type = 'son'
+      }
+
+      if (!downloadfile(type, filename)) {
         this.$message.error(this.$t('global.filedownloadfail'))
       }
     }

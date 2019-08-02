@@ -63,7 +63,7 @@
           :multiple="false"
           action="http://127.0.0.1:8080/doc/upload"
           :http-request="customUploadlogo"
-          :file-list="dumplogofilelist"
+          :file-list="logofileList"
           :auto-upload="false"
         >
           <el-button slot="trigger" style="margin-left: 45px;" size="small" type="primary" :disabled="submitpermission">{{ $t('global.selectfile') }}</el-button>
@@ -95,6 +95,8 @@ export default {
       calfileList: [],
       dprfileList: [],
       pacalfileList: [],
+      logofileList: [],
+
       dumpcaliform: {
         dumpcalifilelist: ['rfCalData.bin', 'pdr_amendment.tgz', 'pa_calibration.txt']
       },
@@ -140,8 +142,20 @@ export default {
     submitUploadlogo() {
       this.$refs.uploadlogo.submit()
     },
+
+    // Filetype: 'calibration', 'pdr','pacalibration','logo','firmware',
+    //      'operatordefault','device','internal','son','cndata','log'
     downloadclick(filename) {
-      if (!downloadfile(filename)) {
+      let type = 'calibration'
+      if (filename === 'pdr_amendment.tgz') {
+        type = 'pdr'
+      } else if (filename === 'pa_calibration.txt') {
+        type = 'pacalibration'
+      } else if (filename === 'logo.png') {
+        type = 'logo'
+      }
+
+      if (!downloadfile(type, filename)) {
         this.$message.error(this.$t('global.filedownloadfail'))
       }
     }

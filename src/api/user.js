@@ -14,13 +14,15 @@ import request from '@/utils/request'
   login response data example(success) :
   {
     code: 20000,
-    data: 'thisisatokenexample'
+    data: {
+      token:thisisatokenexample'
+    }
   }
 
   login response data example(fail, code != 20000 and message indicate the err msg) :
-     50008: Illegal token
+     50007: Password unmatch
+     50008: account locked
      50012: Other clients logged in
-     50014: Token expired
   The fail message is same for all the APIs
   {
     code: 50008,
@@ -39,8 +41,10 @@ export function login(data) {
   getinfo request data example :
   {
     url: '/action/getuserinfo',
-    method: 'get',
-    data: 'admin-token'
+    method: 'post',
+    data: {
+      username: 'admin',
+    }
   }
 
   getinfo response data example(success,psswordhint is optional) :
@@ -49,15 +53,16 @@ export function login(data) {
     data: {
       roles: ['admin'],
       username: 'admin',
+      status:'enabled',
       passwordexpire: '7'
     }
   }
  */
-export function getInfo(token) {
+export function getInfo(username) {
   return request({
     url: '/action/getuserinfo',
     method: 'post',
-    data: { token }
+    data: { username: username }
   })
 }
 
@@ -65,8 +70,8 @@ export function getInfo(token) {
   updatepassword request data example :
   {
     url: '/action/updatepassword',
-    method: 'get',
-    data: 'newpassword@123'
+    method: 'post',
+    data: {newpassword:'newpassword@123'}
   }
 
   updatepassword response data example(success) :
@@ -80,11 +85,11 @@ export function getInfo(token) {
     message: 'Password should include at least 3 kinds of (uppercase,lowercase,number,symbol) and with minimum length 6'
   }
  */
-export function updatepassword(newpassword) {
+export function updatepassword(password) {
   return request({
     url: '/action/updatepassword',
     method: 'post',
-    data: newpassword
+    data: { newpassword: password }
   })
 }
 
@@ -98,7 +103,7 @@ export function updatepassword(newpassword) {
   logout response data example(success) :
   {
     code: 20000,
-    data: 'success'
+    message: 'success'
   }
  */
 export function logout() {
@@ -134,7 +139,7 @@ export function adduser(data) {
   password field is optional, if it is not included in data, it means no change
   {
     url: '/action/modifyuser',
-    method: 'put',
+    method: 'post',
     data:{
         username: 'admin',
         password: '123456',
@@ -155,17 +160,17 @@ export function modifyuser(data) {
   deleteuser request data example :
   {
     url: '/action/deleteuser',
-    method: 'put',
+    method: 'post',
     data:{
         username: 'admin'
     }
   }
 */
-export function deleteuser(data) {
+export function deleteuser(name) {
   return request({
     url: '/action/deleteuser',
     method: 'post',
-    data
+    data: { username: name }
   })
 }
 
@@ -181,8 +186,8 @@ export function deleteuser(data) {
     code: 20000,
     data:
     [{ roles: ['admin'], username: 'admin', status: 'enabled' },
-     { roles: ['operator'], username: 'operator', status: 'disabled' },
-     { roles: ['guest'], username: 'guest', status: 'disabled' }]
+     { roles: ['operator'], username: 'operator', status: 'enabled' },
+     { roles: ['guest'], username: 'guest', status: 'locked' }]
   }
 */
 export function queryusers() {

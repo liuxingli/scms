@@ -60,6 +60,10 @@ export default {
     switchyes: 'Yes',
     switchno: 'No'
   },
+  missingpage: {
+    message: 'The webmaster said that you can not enter this page...',
+    operation: 'Please check that the URL you entered is correct or return to the homepage.'
+  },
   navbar: {
     logOut: 'LogOut',
     changepassword: 'Change Password',

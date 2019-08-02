@@ -60,6 +60,10 @@ export default {
     switchyes: '是',
     switchno: '否'
   },
+  missingpage: {
+    message: '访问的页面不存在或者没有权限',
+    operation: '请检查输入的URL是否正确或者返回到主页面'
+  },
   navbar: {
     logOut: '注销登录',
     changepassword: '修改密码',

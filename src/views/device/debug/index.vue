@@ -321,7 +321,7 @@ export default {
     },
 
     downloadclick(filename) {
-      if (!downloadfile(filename)) {
+      if (!downloadfile('log', filename)) {
         this.$message.error(this.$t('global.filedownloadfail'))
       }
     }

@@ -2,7 +2,7 @@ import Mock from 'mockjs'
 
 const usermap = new Map([
   ['admin-token', { roles: ['admin'], username: 'admin', password: '111111', status: 'enabled', passwordexpire: '6' }],
-  ['operator-token', { roles: ['operator'], username: 'operator', password: '111111', status: 'disabled' }],
+  ['operator-token', { roles: ['operator'], username: 'operator', password: '111111', status: 'locked' }],
   ['guest-token', { roles: ['guest'], username: 'guest', password: '111111', status: 'enabled' }]
 ])
 
@@ -41,7 +41,15 @@ export default [
     url: '/action/getuserinfo',
     type: 'post',
     response: config => {
-      const { token } = config.body
+      const { username } = config.body
+
+      let token = ''
+      for (const [key, value] of usermap) {
+        if (value.username === username) {
+          token = key
+          break
+        }
+      }
 
       // mock error
       if (usermap.has(token)) {
@@ -77,7 +85,7 @@ export default [
     response: _ => {
       return {
         code: 20000,
-        data: 'success'
+        message: 'success'
       }
     }
   },
@@ -109,7 +117,7 @@ export default [
 
         return {
           code: 20000,
-          data: 'success'
+          message: 'success'
         }
       }
     }
@@ -143,7 +151,7 @@ export default [
 
         return {
           code: 20000,
-          data: 'success'
+          message: 'success'
         }
       }
     }
@@ -177,7 +185,7 @@ export default [
 
         return {
           code: 20000,
-          data: 'success'
+          message: 'success'
         }
       }
     }

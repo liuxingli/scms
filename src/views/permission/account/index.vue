@@ -39,13 +39,13 @@
         </el-form-item>
 
         <el-form-item :label="$t('permission.status')" prop="status">
-          <el-switch
-            v-model="create.status"
-            :active-text="$t('global.switchon')"
-            :inactive-text="$t('global.switchoff')"
-            active-value="enabled"
-            inactive-value="disabled"
-          />
+          <el-select v-model="create.status">
+            <el-option
+              v-for="item in status_options"
+              :key="item.value"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
 
         <el-form-item :label="$t('permission.role')" prop="roles">
@@ -78,13 +78,13 @@
         </el-form-item>
 
         <el-form-item :label="$t('permission.status')" prop="status">
-          <el-switch
-            v-model="update.status"
-            :active-text="$t('global.switchon')"
-            :inactive-text="$t('global.switchoff')"
-            active-value="enabled"
-            inactive-value="disabled"
-          />
+          <el-select v-model="update.status">
+            <el-option
+              v-for="item in status_options"
+              :key="item.value"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
 
         <el-form-item :label="$t('permission.role')" prop="roles">
@@ -197,6 +197,12 @@ export default {
         password: '',
         checkPass: ''
       },
+
+      status_options: [{
+        value: 'enabled'
+      }, {
+        value: 'locked'
+      }],
 
       securitycfg: {
         passwordminlen: '',
@@ -366,8 +372,7 @@ export default {
       this.$confirm(this.$t('permission.deleteuserconfirm') + user.username + '?', '', {
         type: 'warning'
       }).then(() => {
-        const username = { username: user.username }
-        deleteuser(username).then(res => {
+        deleteuser(user.username).then(res => {
           this.$message.success(this.$t('permission.deleteusersuccess') + user.username + '!')
           this.getUsers()
           console.log(user.id)
