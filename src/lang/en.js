@@ -235,7 +235,7 @@ export default {
     roleplaceholder: 'please select role',
     reinputpassword: 'please input password again',
     unmatchpassword: 'Password unmatch',
-    weakpassword: 'Passwords should at least contain types(upper, lower, num and symbol):',
+    weakpassword: 'Passwords should at least contain types(upper, lower, num and symbol) ',
     passwordtooshort: 'Password too short, should >=',
     passwordtoolong: 'Password too long, should <= 18',
     passwordlenhint: 'length should be between 6-18 chars',
@@ -246,7 +246,9 @@ export default {
     deleteusersuccess: 'Delete user successfully:',
     deleteuserfail: 'Delete user failed',
     deleteuserconfirm: 'Are you sure to delete the user:',
-    operationcancel: 'Operation canceled'
+    operationcancel: 'Operation canceled',
+    adminnodelete: 'admin is not allowed to remove',
+    passwordhint: 'min len >=8 and include upper, lower, num and symbol'
   },
   dashboard: {
     title: 'Device Information'

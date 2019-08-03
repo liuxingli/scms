@@ -235,8 +235,8 @@ export default {
     width: 40%;
   }
   &-text {
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 15px;
+    line-height: 10px;
     margin:10px 5px 15px 250px;
   }
 }

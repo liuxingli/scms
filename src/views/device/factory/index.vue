@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { downloadfile, uploadfile } from '@/api/cpe'
+import { filedownload, uploadfile } from '@/api/cpe'
 import checkPermission from '@/utils/permission'
 
 export default {
@@ -155,7 +155,7 @@ export default {
         type = 'logo'
       }
 
-      if (!downloadfile(type, filename)) {
+      if (!filedownload(type, filename)) {
         this.$message.error(this.$t('global.filedownloadfail'))
       }
     }

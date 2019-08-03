@@ -341,6 +341,11 @@ export default {
     // Update user
     updateUser() {
       this.$refs.update.validate((valid) => {
+        // admin's role must be admin
+        if (this.update.username === 'admin') {
+          this.update.roles = 'admin'
+        }
+
         if (valid) {
           this.updateLoading = true
           const updateuser = {}
@@ -369,6 +374,11 @@ export default {
 
     // Remove one user
     removeUser(user) {
+      if (user.username === 'admin') {
+        this.$message.error(this.$t('permission.adminnodelete'))
+        return
+      }
+
       this.$confirm(this.$t('permission.deleteuserconfirm') + user.username + '?', '', {
         type: 'warning'
       }).then(() => {

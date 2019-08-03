@@ -4073,8 +4073,8 @@ export default [
   },
 
   {
-    url: '/action/download',
-    type: 'post',
+    url: '/action/downloadfile',
+    type: 'get',
     response: _ => {
       const retdata = 'this is content of test file'
       return {

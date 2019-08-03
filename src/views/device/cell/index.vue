@@ -644,7 +644,7 @@ export default {
     line-height: 10px;
   }
   &-text {
-    font-size: 20px;
+    font-size: 15px;
     line-height: 10px;
     margin:5px 10px 5px 250px;
   }

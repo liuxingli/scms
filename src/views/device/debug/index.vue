@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { getparameters, setparameters, getlogdumpfilelist, downloadfile } from '@/api/cpe'
+import { getparameters, setparameters, getlogdumpfilelist, filedownload } from '@/api/cpe'
 import checkPermission from '@/utils/permission'
 import { isvalidateipv4v6, convertBoolean, isvalidateURL } from '@/utils/checkrules'
 
@@ -321,7 +321,7 @@ export default {
     },
 
     downloadclick(filename) {
-      if (!downloadfile('log', filename)) {
+      if (!filedownload('log', filename)) {
         this.$message.error(this.$t('global.filedownloadfail'))
       }
     }
@@ -339,12 +339,12 @@ export default {
     line-height: 10px;
   }
   &-text {
-    font-size: 20px;
+    font-size: 15px;
     line-height: 10px;
     margin:5px 10px 5px 250px;
   }
   &-dump {
-    font-size: 20px;
+    font-size: 15px;
     line-height: 10px;
   }
 }

@@ -246,7 +246,9 @@ export default {
     deleteusersuccess: '删除用户成功:',
     deleteuserfail: '删除用户失败:',
     deleteuserconfirm: '确认要删除用户:',
-    operationcancel: '操作取消'
+    operationcancel: '操作取消',
+    adminnodelete: '不能删除超级用户admin',
+    passwordhint: '建议密码长度超过8字符，并且包含大写，小写，数字，特殊字符'
   },
   dashboard: {
     title: '设备信息'

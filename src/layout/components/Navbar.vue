@@ -18,8 +18,8 @@
       <lang-select class="right-menu-item hover-effect" />
     </div>
 
-    <el-dialog width="30%" :visible.sync="dialogUpdateVisible" :title="$t('navbar.changepasswordtitle')" :close-on-click-modal="false" :close-on-press-escape="false">
-      <el-form id="#update" ref="update" :model="update" :rules="modifyrules" label-width="200px">
+    <el-dialog width="45%" :visible.sync="dialogUpdateVisible" :title="$t('navbar.changepasswordtitle')" :close-on-click-modal="false" :close-on-press-escape="false" @close="reset">
+      <el-form id="#update" ref="update" :model="update" :rules="modifyrules" label-width="150px">
         <el-form-item :label="$t('permission.newpassword')" prop="password">
           <el-input v-model="update.password" type="password" show-password="true" auto-complete="off" />
         </el-form-item>
@@ -75,7 +75,7 @@ export default {
         }, {
           min: 6,
           max: 18,
-          message: this.$t('permission.passwordlenhint')
+          message: this.$t('permission.passwordhint')
         }],
 
         checkPass: [{
@@ -98,6 +98,11 @@ export default {
     ])
   },
   methods: {
+    // Reset password change
+    reset() {
+      this.$refs.update.resetFields()
+    },
+
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
@@ -111,6 +116,7 @@ export default {
               this.$message.success(this.$t('permission.modifyusersuccess'))
               this.dialogUpdateVisible = false
               this.updateLoading = false
+              this.reset()
             } else {
               this.$message.error(res.message)
               this.updateLoading = false

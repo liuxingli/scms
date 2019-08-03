@@ -273,12 +273,8 @@ export function setparameters(parameters) {
 
 export async function filedownload(type, filename) {
   try {
-    console.log('type:' + type)
-    console.log('filename:' + filename)
     const res = await downloadfile(type, filename)
-    console.log('res:' + res)
-
-    const blob = new Blob([res.data])
+    const blob = new Blob([res])
     if ('download' in document.createElement('a')) { // Not IE
       const elink = document.createElement('a')
       elink.download = filename
@@ -594,11 +590,11 @@ export function downloadfile(type, filename) {
 */
 export function uploadfile(fileobj, filetype) {
   const param = new FormData()
-  param.append('files', fileobj.file)
+  param.append(filetype, fileobj.file)
   return request({
     method: 'post',
     url: '/action/uploadfile',
-    headers: { 'Content-Type': 'multipart/form-data', 'UploadFileType': filetype },
+    headers: { 'Content-Type': 'multipart/form-data' },
     data: param
   })
 }
