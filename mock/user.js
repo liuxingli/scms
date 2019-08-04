@@ -9,7 +9,7 @@ const usermap = new Map([
 export default [
   // user login
   {
-    url: '/action/login',
+    url: '/action/user_login',
     type: 'post',
     response: config => {
       const { username, password } = config.body
@@ -38,7 +38,7 @@ export default [
 
   // get user info
   {
-    url: '/action/getuserinfo',
+    url: '/action/user_getuserinfo',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -68,7 +68,7 @@ export default [
 
   // update password
   {
-    url: '/action/updatepassword',
+    url: '/action/user_updatepassword',
     type: 'post',
     response: _ => {
       return {
@@ -80,7 +80,7 @@ export default [
 
   // user logout
   {
-    url: '/action/logout',
+    url: '/action/user_logout',
     type: 'post',
     response: _ => {
       return {
@@ -92,7 +92,7 @@ export default [
 
   // adduser
   {
-    url: '/action/adduser',
+    url: '/action/user_adduser',
     type: 'post',
     response: config => {
       const { username, password, roles, status } = config.body
@@ -125,7 +125,7 @@ export default [
 
   // modifyuser
   {
-    url: '/action/modifyuser',
+    url: '/action/user_modifyuser',
     type: 'post',
     response: config => {
       const { username, password, roles, status } = config.body
@@ -159,7 +159,7 @@ export default [
 
   // deleteyuser
   {
-    url: '/action/deleteuser',
+    url: '/action/user_deleteuser',
     type: 'post',
     response: config => {
       const { username } = config.body
@@ -193,7 +193,7 @@ export default [
 
   // queryusers
   {
-    url: '/action/queryusers',
+    url: '/action/user_queryusers',
     type: 'post',
     response: _ => {
       return {
@@ -205,7 +205,7 @@ export default [
 
   // getauthcfg
   {
-    url: '/action/getauthcfg',
+    url: '/action/user_getauthcfg',
     type: 'post',
     response: _ => {
       return {
@@ -226,7 +226,7 @@ export default [
 
   // saveauthcfg
   {
-    url: '/action/saveauthcfg',
+    url: '/action/user_saveauthcfg',
     type: 'post',
     response: _ => {
       return {

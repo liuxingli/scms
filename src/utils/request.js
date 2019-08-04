@@ -14,7 +14,13 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
+    // use https for user api on production environment
+    if (process.env.NODE_ENV !== 'development') {
+      const url = config.url
+      if (url.indexOf('user_') !== -1) {
+        config.url = 'https://' + window.location.hostname + ':443' + url
+      }
+    }
 
     if (store.getters.token) {
       // let each request carry token
@@ -47,7 +53,6 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code exist(for file download, no code!)
-    console.log('rcv response')
     if (res.code !== undefined && res.message !== undefined) {
       if (res.code !== 20000) { // if code is not 20000, it is judged as an error.
         Message({

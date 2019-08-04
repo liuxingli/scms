@@ -300,7 +300,7 @@ export async function filedownload(type, filename) {
 /**
   getparametervalues request data example :
   {
-    url: '/action/getparametervalues',
+    url: '/action/cpe_getparametervalues',
     method: 'post',
     data: [
       { path: 'Device.ManagementServer.URL' }，
@@ -322,7 +322,7 @@ export async function filedownload(type, filename) {
 */
 export function getparametervalues(inputdata) {
   return request({
-    url: '/action/getparametervalues',
+    url: '/action/cpe_getparametervalues',
     method: 'post',
     data: inputdata
   })
@@ -331,7 +331,7 @@ export function getparametervalues(inputdata) {
 /**
   setparametervalues request data example :
   {
-    url: '/action/setparametervalues',
+    url: '/action/cpe_setparametervalues',
     method: 'post',
     data: [
       { path: 'Device.ManagementServer.URL', value: 'http://192.168.0.100' }，
@@ -354,7 +354,7 @@ export function getparametervalues(inputdata) {
  */
 export function setparametervalues(inputdata) {
   return request({
-    url: '/action/setparametervalues',
+    url: '/action/cpe_setparametervalues',
     method: 'post',
     data: inputdata
   })
@@ -363,7 +363,7 @@ export function setparametervalues(inputdata) {
 /**
   addobject request data example :
   {
-    url: '/action/addobject',
+    url: '/action/cpe_addobject',
     method: 'post',
     data: {path:'Device.Routing.Router.'}
   }
@@ -376,7 +376,7 @@ export function setparametervalues(inputdata) {
 */
 export function addobject(pathval) {
   return request({
-    url: '/action/addobject',
+    url: '/action/cpe_addobject',
     method: 'post',
     data: { path: pathval }
   })
@@ -385,7 +385,7 @@ export function addobject(pathval) {
 /**
   deleteobject request data example :
   {
-    url: '/action/deleteobject',
+    url: '/action/cpe_deleteobject',
     method: 'post',
     data:{ path:'Device.Routing.Router.1.'}
   }
@@ -397,7 +397,7 @@ export function addobject(pathval) {
 */
 export function deleteobject(pathval) {
   return request({
-    url: '/action/deleteobject',
+    url: '/action/cpe_deleteobject',
     method: 'post',
     data: { path: pathval }
   })
@@ -406,7 +406,7 @@ export function deleteobject(pathval) {
 /**
   reboot request data example :
   {
-    url: '/action/reboot',
+    url: '/action/cpe_reboot',
     method: 'post'
   }
 
@@ -417,7 +417,7 @@ export function deleteobject(pathval) {
 */
 export function reboot() {
   return request({
-    url: '/action/reboot',
+    url: '/action/cpe_reboot',
     method: 'post'
   })
 }
@@ -425,7 +425,7 @@ export function reboot() {
 /**
   factoryreset request data example :
   {
-    url: '/action/factoryreset',
+    url: '/action/cpe_factoryreset',
     method: 'post'
   }
 
@@ -436,7 +436,7 @@ export function reboot() {
 */
 export function factoryreset() {
   return request({
-    url: '/action/factoryreset',
+    url: '/action/cpe_factoryreset',
     method: 'post'
   })
 }
@@ -444,7 +444,7 @@ export function factoryreset() {
 /**
   ping request data example :
   {
-    url: '/action/ping',
+    url: '/action/cpe_ping',
     method: 'post',
     data: {dstip: '192.168.0.201'}
   }
@@ -462,7 +462,7 @@ export function factoryreset() {
 */
 export function ping(dst) {
   return request({
-    url: '/action/ping',
+    url: '/action/cpe_ping',
     method: 'post',
     data: { dstip: dst }
   })
@@ -522,7 +522,7 @@ export function ping(dst) {
 */
 export function getdbtree(data) {
   return request({
-    url: '/action/getdbtree',
+    url: '/action/cpe_getdbtree',
     method: 'post',
     data
   })
@@ -544,7 +544,7 @@ export function getdbtree(data) {
 */
 export function getlogdumpfilelist() {
   return request({
-    url: '/action/getlogdumpfilelist',
+    url: '/action/cpe_getlogdumpfilelist',
     method: 'post'
   })
 }
@@ -552,7 +552,7 @@ export function getlogdumpfilelist() {
 /**
   downloadfile request data example :
   {
-    url: '/action/downloadfile',
+    url: '/action/cpe_downloadfile',
     method: 'get',
     params: {
             type: device,
@@ -569,7 +569,7 @@ export function getlogdumpfilelist() {
 */
 export function downloadfile(type, filename) {
   return request({
-    url: '/action/downloadfile',
+    url: '/action/cpe_downloadfile',
     method: 'get',
     params: {
       type: type,
@@ -581,7 +581,7 @@ export function downloadfile(type, filename) {
 /**
   uploadfile request data example :
   {
-    url: '/action/uploadfile',
+    url: '/action/cpe_uploadfile',
     method: 'post',
     data：
   }
@@ -593,7 +593,7 @@ export function uploadfile(fileobj, filetype) {
   param.append(filetype, fileobj.file)
   return request({
     method: 'post',
-    url: '/action/uploadfile',
+    url: '/action/cpe_uploadfile',
     headers: { 'Content-Type': 'multipart/form-data' },
     data: param
   })
@@ -602,7 +602,7 @@ export function uploadfile(fileobj, filetype) {
 /**
   deletefile request data example :
   {
-    url: '/action/deletefile',
+    url: '/action/cpe_deletefile',
     method: 'post',
     data: {filename:'pslog.tgz'}
   }
@@ -610,7 +610,7 @@ export function uploadfile(fileobj, filetype) {
 export function deletefile(filename) {
   return request({
     method: 'post',
-    url: '/action/deletefile',
+    url: '/action/cpe_deletefile',
     data: { filename: filename }
   })
 }
@@ -618,14 +618,14 @@ export function deletefile(filename) {
 /**
   upgrade request data example :
   {
-    url: '/action/upgrade',
+    url: '/action/cpe_upgrade',
     method: 'post',
     data: {filename:'firmware1.0.tgz'}
   }
 */
 export function upgrade(filename) {
   return request({
-    url: '/action/upgrade',
+    url: '/action/cpe_upgrade',
     method: 'post',
     data: { filename: filename }
   })
@@ -634,7 +634,7 @@ export function upgrade(filename) {
 /**
   queryupgradestatus request data example :
   {
-    url: '/action/queryupgradestatus',
+    url: '/action/cpe_queryupgradestatus',
     method: 'post'
   }
 
@@ -650,7 +650,7 @@ export function upgrade(filename) {
 */
 export function queryupgradestatus() {
   return request({
-    url: '/action/queryupgradestatus',
+    url: '/action/cpe_queryupgradestatus',
     method: 'post'
   })
 }

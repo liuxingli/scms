@@ -33,13 +33,13 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import(/* webpackChunkName: "group-scms" */'@/views/login/index'),
     hidden: true
   },
 
   {
     path: '/404',
-    component: () => import('@/views/404'),
+    component: () => import(/* webpackChunkName: "group-scms" */'@/views/404'),
     hidden: true
   },
 
@@ -49,7 +49,7 @@ export const constantRoutes = [
     redirect: 'dashboard',
     children: [{
       path: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
+      component: () => import(/* webpackChunkName: "group-scms" */'@/views/dashboard/index'),
       name: 'Dashboard',
       meta: { title: 'dashboard', icon: 'home' }
     }]
@@ -74,73 +74,73 @@ export const asyncRoutes = [
     children: [
       {
         path: 'acs',
-        component: () => import('@/views/device/acs/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/acs/index'),
         meta: { title: 'acs' }
       },
 
       {
         path: 'cell',
-        component: () => import('@/views/device/cell/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/cell/index'),
         meta: { title: 'cell' }
       },
 
       {
         path: 'network',
-        component: () => import('@/views/device/network/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/network/index'),
         meta: { title: 'network' }
       },
 
       {
         path: 'measurement',
-        component: () => import('@/views/device/measurement/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/measurement/index'),
         meta: { title: 'measurement' }
       },
 
       {
         path: 'sync',
-        component: () => import('@/views/device/sync/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/sync/index'),
         meta: { title: 'sync' }
       },
 
       {
         path: 'operation',
-        component: () => import('@/views/device/operation/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/operation/index'),
         meta: { title: 'operation' }
       },
 
       {
         path: 'pm',
-        component: () => import('@/views/device/pm/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/pm/index'),
         meta: { title: 'pm' }
       },
 
       {
         path: 'neighborcell',
-        component: () => import('@/views/device/neighborcell/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/neighborcell/index'),
         meta: { title: 'neighborcell' }
       },
 
       {
         path: 'debug',
-        component: () => import('@/views/device/debug/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/debug/index'),
         meta: { title: 'debug' }
       },
 
       {
         path: 'upgrade',
-        component: () => import('@/views/device/upgrade/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/upgrade/index'),
         meta: { title: 'upgrade' }
       },
 
       {
         path: 'factory',
-        component: () => import('@/views/device/factory/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/factory/index'),
         meta: { title: 'factory' }
       },
 
       {
         path: 'security',
-        component: () => import('@/views/device/security/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/device/security/index'),
         name: 'security',
         meta: { title: 'security' }
       }
@@ -157,28 +157,28 @@ export const asyncRoutes = [
       {
         path: 'devicetree',
         name: 'devicetree',
-        component: () => import('@/views/datamodel/devicetree/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/datamodel/devicetree/index'),
         meta: { title: 'devicetree' }
       },
 
       {
         path: 'internaltree',
         name: 'internaltree',
-        component: () => import('@/views/datamodel/internaltree/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/datamodel/internaltree/index'),
         meta: { title: 'internaltree' }
       },
 
       {
         path: 'exportdb',
         name: 'exportdb',
-        component: () => import('@/views/datamodel/exportdb/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/datamodel/exportdb/index'),
         meta: { title: 'exportdb' }
       },
 
       {
         path: 'importdb',
         name: 'importdb',
-        component: () => import('@/views/datamodel/importdb/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/datamodel/importdb/index'),
         meta: { title: 'importdb' }
       }
     ]
@@ -194,13 +194,13 @@ export const asyncRoutes = [
       {
         path: 'account',
         name: 'account',
-        component: () => import('@/views/permission/account/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/permission/account/index'),
         meta: { title: 'account' }
       },
       {
         path: 'securityconfig',
         name: 'securityconfig',
-        component: () => import('@/views/permission/securityconfig/index'),
+        component: () => import(/* webpackChunkName: "group-scms" */'@/views/permission/securityconfig/index'),
         meta: { title: 'securityconfig' }
       }
     ]

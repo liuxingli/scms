@@ -3929,7 +3929,7 @@ const ipstackdata = {
 
 export default [
   {
-    url: '/action/setparametervalues',
+    url: '/action/cpe_setparametervalues',
     type: 'post',
     response: config => {
       const inputdata = config.body
@@ -3943,7 +3943,7 @@ export default [
   },
 
   {
-    url: '/action/getparametervalues',
+    url: '/action/cpe_getparametervalues',
     type: 'post',
     response: config => {
       let errflg = false
@@ -3975,7 +3975,7 @@ export default [
   },
 
   {
-    url: '/action/getdbtree',
+    url: '/action/cpe_getdbtree',
     type: 'post',
     response: config => {
       const path = config.body.path
@@ -4010,7 +4010,7 @@ export default [
   },
 
   {
-    url: '/action/addobject',
+    url: '/action/cpe_addobject',
     type: 'post',
     response: _ => {
       return {
@@ -4021,7 +4021,7 @@ export default [
   },
 
   {
-    url: '/action/deleteobject',
+    url: '/action/cpe_deleteobject',
     type: 'post',
     response: _ => {
       return {
@@ -4031,7 +4031,7 @@ export default [
   },
 
   {
-    url: '/action/reboot',
+    url: '/action/cpe_reboot',
     type: 'post',
     response: _ => {
       return {
@@ -4041,7 +4041,7 @@ export default [
   },
 
   {
-    url: '/action/factoryreset',
+    url: '/action/cpe_factoryreset',
     type: 'post',
     response: _ => {
       return {
@@ -4051,7 +4051,7 @@ export default [
   },
 
   {
-    url: '/action/ping',
+    url: '/action/cpe_ping',
     type: 'post',
     response: _ => {
       return {
@@ -4061,7 +4061,7 @@ export default [
   },
 
   {
-    url: '/action/getlogdumpfilelist',
+    url: '/action/cpe_getlogdumpfilelist',
     type: 'post',
     response: _ => {
       const retdata = ['Devicelog.tgz', 'ps.log', 'dmesg.log', 'fsm.log']
@@ -4073,7 +4073,7 @@ export default [
   },
 
   {
-    url: '/action/downloadfile',
+    url: '/action/cpe_downloadfile',
     type: 'get',
     response: _ => {
       const retdata = 'this is content of test file'

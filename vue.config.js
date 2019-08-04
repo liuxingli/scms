@@ -97,7 +97,8 @@ module.exports = {
         config => config.devtool('cheap-source-map')
       )
 
-    config
+    /* disable split chunks for production mode */
+    /* config
       .when(process.env.NODE_ENV !== 'development',
         config => {
           config
@@ -135,5 +136,6 @@ module.exports = {
           config.optimization.runtimeChunk('single')
         }
       )
+      */
   }
 }

@@ -3,7 +3,7 @@ import request from '@/utils/request'
 /**
   login request data example :
   {
-    url: '/action/login',
+    url: '/action/user_login',
     method: 'post',
     data: {
       username: 'admin'
@@ -31,7 +31,7 @@ import request from '@/utils/request'
  */
 export function login(data) {
   return request({
-    url: '/action/login',
+    url: '/action/user_login',
     method: 'post',
     data
   })
@@ -40,7 +40,7 @@ export function login(data) {
 /**
   getinfo request data example :
   {
-    url: '/action/getuserinfo',
+    url: '/action/user_getuserinfo',
     method: 'post',
     data: {
       username: 'admin',
@@ -60,7 +60,7 @@ export function login(data) {
  */
 export function getInfo(username) {
   return request({
-    url: '/action/getuserinfo',
+    url: '/action/user_getuserinfo',
     method: 'post',
     data: { username: username }
   })
@@ -69,7 +69,7 @@ export function getInfo(username) {
 /**
   updatepassword request data example :
   {
-    url: '/action/updatepassword',
+    url: '/action/user_updatepassword',
     method: 'post',
     data: {newpassword:'newpassword@123'}
   }
@@ -87,7 +87,7 @@ export function getInfo(username) {
  */
 export function updatepassword(password) {
   return request({
-    url: '/action/updatepassword',
+    url: '/action/user_updatepassword',
     method: 'post',
     data: { newpassword: password }
   })
@@ -96,7 +96,7 @@ export function updatepassword(password) {
 /**
   logout request data example :
   {
-    url: '/action/logout',
+    url: '/action/user_logout',
     method: 'post',
   }
 
@@ -108,7 +108,7 @@ export function updatepassword(password) {
  */
 export function logout() {
   return request({
-    url: '/action/logout',
+    url: '/action/user_logout',
     method: 'post'
   })
 }
@@ -116,7 +116,7 @@ export function logout() {
 /**
   adduser request data example :
   {
-    url: '/action/adduser',
+    url: '/action/user_adduser',
     method: 'post',
     data: {
       username: 'admin',
@@ -128,7 +128,7 @@ export function logout() {
 */
 export function adduser(data) {
   return request({
-    url: '/action/adduser',
+    url: '/action/user_adduser',
     method: 'post',
     data
   })
@@ -138,7 +138,7 @@ export function adduser(data) {
   modifyuser request data example :
   password field is optional, if it is not included in data, it means no change
   {
-    url: '/action/modifyuser',
+    url: '/action/user_modifyuser',
     method: 'post',
     data:{
         username: 'admin',
@@ -150,7 +150,7 @@ export function adduser(data) {
 */
 export function modifyuser(data) {
   return request({
-    url: '/action/modifyuser',
+    url: '/action/user_modifyuser',
     method: 'post',
     data
   })
@@ -159,7 +159,7 @@ export function modifyuser(data) {
 /**
   deleteuser request data example :
   {
-    url: '/action/deleteuser',
+    url: '/action/user_deleteuser',
     method: 'post',
     data:{
         username: 'admin'
@@ -168,7 +168,7 @@ export function modifyuser(data) {
 */
 export function deleteuser(name) {
   return request({
-    url: '/action/deleteuser',
+    url: '/action/user_deleteuser',
     method: 'post',
     data: { username: name }
   })
@@ -177,7 +177,7 @@ export function deleteuser(name) {
 /**
   queryusers request data example :
   {
-    url: '/action/queryusers',
+    url: '/action/user_queryusers',
     method: 'post',
   }
 
@@ -192,7 +192,7 @@ export function deleteuser(name) {
 */
 export function queryusers() {
   return request({
-    url: '/action/queryusers',
+    url: '/action/user_queryusers',
     method: 'post'
   })
 }
@@ -200,7 +200,7 @@ export function queryusers() {
 /**
   query auth config :
   {
-    url: '/action/getauthcfg',
+    url: '/action/user_getauthcfg',
     method: 'post',
   }
 
@@ -220,7 +220,7 @@ export function queryusers() {
 */
 export function getauthcfg() {
   return request({
-    url: '/action/getauthcfg',
+    url: '/action/user_getauthcfg',
     method: 'post'
   })
 }
@@ -228,7 +228,7 @@ export function getauthcfg() {
 /**
   save auth config :
   {
-    url: '/action/saveauthcfg',
+    url: '/action/user_saveauthcfg',
     method: 'post',
     data: { sessionlife: '1800',
             loginattempnum: '5',
@@ -248,7 +248,7 @@ export function getauthcfg() {
 */
 export function saveauthcfg(data) {
   return request({
-    url: '/action/saveauthcfg',
+    url: '/action/user_saveauthcfg',
     method: 'post',
     data
   })
