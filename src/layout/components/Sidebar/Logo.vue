@@ -2,10 +2,10 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img class="sidebar-logo" src="@/assets/logo.png" style="max-height:30px;max-width:30px">
+        <img class="sidebar-logo" src="logo.png" style="max-height:30px;max-width:30px">
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img class="sidebar-logo" src="@/assets/logo.png" style="max-height:40px;">
+        <img class="sidebar-logo" src="logo.png" style="max-height:40px;">
         <h1 class="sidebar-title"> SmallCell Web UI </h1>
       </router-link>
     </transition>
