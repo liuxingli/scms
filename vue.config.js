@@ -8,9 +8,6 @@ function resolve(dir) {
 
 const name = defaultSettings.title || 'Smallcell management system' // page title
 
-// If your port is set to 80,
-// use administrator privileges to execute the command line.
-// For example, Mac: sudo npm run
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
 const port = process.env.port || process.env.npm_config_port || 9528 // dev port
@@ -49,6 +46,7 @@ module.exports = {
     },
     after: require('./mock/mock-server.js')
   },
+
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
@@ -59,6 +57,14 @@ module.exports = {
       }
     }
   },
+
+  css: {
+    modules: false,
+    extract: false,
+    sourceMap: false,
+    loaderOptions: {}
+  },
+
   chainWebpack(config) {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
