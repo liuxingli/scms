@@ -164,7 +164,10 @@ const idmap = new Map([
 export let cpe_oui = ''
 
 /* helper func for getparametersvalues, user should call this func instead of getparametervalues
-   the example of input data
+   If the input parameter is ID(convertflg = true), this func should convert between id and path
+   If the convertflg is false, this func call getparametervalues directly
+
+   the example of input data(convertflg = true)
    {
      'id_cmsurl': ''，
      'id_cmsusername': ''，
@@ -177,9 +180,28 @@ export let cpe_oui = ''
      'id_cmsusername': 'admin'，
      'id_cmspassword': 'password'
    }
-*/
 
-export async function getparameters(parameters) {
+   the example of input data(convertflg = false)
+   {
+      data: [
+        { path: 'Device.ManagementServer.URL' }，
+        { path: 'Device.ManagementServer.Username' }，
+        { path: 'Device.ManagementServer.Password' }
+      ]
+   }
+
+   output data example
+   {
+    data: [
+      { path: 'Device.ManagementServer.URL', value: 'http://192.168.0.100' }，
+      { path: 'Device.ManagementServer.Username', value: 'admin' }，
+      { path: 'Device.ManagementServer.Password', value: 'password' }
+    ]
+   }
+
+  */
+
+export async function getparameters(parameters, convertflg = true) {
   let result = false
   let ouiflg = true
 
@@ -210,25 +232,30 @@ export async function getparameters(parameters) {
   if (ouiflg) {
     try {
       // convert id to path and replace .X_ with OUI
-      const pathdata = []
-      for (const elname in parameters) {
-        if (idmap.has(elname)) {
-          const pathstr = idmap.get(elname).replace(/.X_/g, '.X_' + cpe_oui + '_')
-          pathdata.push({ path: pathstr })
-        } else {
-          console.log('undefined id: %s', elname)
-        }
-      }
-      const res = await getparametervalues(pathdata)
-      for (const dataitem of res.data) {
-      // find id for path
-        for (const [id, path] of idmap) {
-          const newpath = path.replace(/.X_/g, '.X_' + cpe_oui + '_')
-          if (newpath === dataitem.path) {
-            parameters[id] = dataitem.value
-            break
+      if (convertflg) {
+        const pathdata = []
+        for (const elname in parameters) {
+          if (idmap.has(elname)) {
+            const pathstr = idmap.get(elname).replace(/.X_/g, '.X_' + cpe_oui + '_')
+            pathdata.push({ path: pathstr })
+          } else {
+            console.log('undefined id: %s', elname)
           }
         }
+        const res = await getparametervalues(pathdata)
+        for (const dataitem of res.data) {
+          // find id for path
+          for (const [id, path] of idmap) {
+            const newpath = path.replace(/.X_/g, '.X_' + cpe_oui + '_')
+            if (newpath === dataitem.path) {
+              parameters[id] = dataitem.value
+              break
+            }
+          }
+        }
+      } else {
+        const res = await getparametervalues(parameters.data)
+        parameters.data = res.data
       }
       result = true
     } catch (err) {
@@ -239,34 +266,53 @@ export async function getparameters(parameters) {
 }
 
 /* helper func for setparametersvalues, user should call this func instead of setparametervalues
-   the example of input data
+   the example of input data if convertflg is true
    {
      'id_cmsurl': '192.168.0.100'，
      'id_cmsusername': 'user'，
      'id_cmspassword': 'password'
    }
-*/
-export function setparameters(parameters) {
-  // convert from id to path
-  const pathdata = []
-  for (const elname in parameters) {
-    if (typeof (elname) !== Object) {
-      if (idmap.has(elname)) {
-        const pathstr = idmap.get(elname).replace(/.X_/g, '.X_' + cpe_oui + '_')
-        const valuestr = parameters[elname]
-        pathdata.push({ path: pathstr, value: valuestr })
-      } else {
-        console.log('undefined id: %s', elname)
-      }
-    }
+
+   the example of input data if convertflg is false
+   {
+    data: [
+      { path: 'Device.ManagementServer.URL', value: 'http://192.168.0.100' }，
+      { path: 'Device.ManagementServer.Username', value: 'admin' }，
+      { path: 'Device.ManagementServer.Password', value: 'password' }
+    ]
   }
 
+ */
+export function setparameters(parameters, convertflg = true) {
   let result = true
-  setparametervalues(pathdata).then(() => {
-  }, err => {
-    console.log('error in Setparameters ' + err)
-    result = false
-  })
+
+  if (convertflg) {
+  // convert from id to path
+    const pathdata = []
+    for (const elname in parameters) {
+      if (typeof (elname) !== Object) {
+        if (idmap.has(elname)) {
+          const pathstr = idmap.get(elname).replace(/.X_/g, '.X_' + cpe_oui + '_')
+          const valuestr = parameters[elname]
+          pathdata.push({ path: pathstr, value: valuestr })
+        } else {
+          console.log('undefined id: %s', elname)
+        }
+      }
+    }
+
+    setparametervalues(pathdata).then(() => {
+    }, err => {
+      console.log('error in Setparameters ' + err)
+      result = false
+    })
+  } else {
+    setparametervalues(parameters.data).then(() => {
+    }, err => {
+      console.log('error in Setparameters ' + err)
+      result = false
+    })
+  }
 
   return result
 }
@@ -318,6 +364,11 @@ export async function filedownload(type, filename) {
       { path: 'Device.ManagementServer.Password', value: 'password' }
     ]
   }
+
+  If a Parameter name argument is given as a Partial Path Name, the request is to
+  be interpreted as a request to return all of the Parameters in the branch of the
+  naming hierarchy that shares the same prefix as the argument. A Partial Path
+  Name MUST end with a “.” (dot) after the last node name in the hierarchy.
 
 */
 export function getparametervalues(inputdata) {

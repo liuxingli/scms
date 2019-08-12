@@ -281,7 +281,7 @@ import checkPermission from '@/utils/permission'
 import { isvalidateipv4v6, convertBoolean } from '@/utils/checkrules'
 
 export default {
-  name: 'Acs',
+  name: 'Cell',
 
   data: function() {
     const validatecandfreqlist = (rule, value, callback) => {

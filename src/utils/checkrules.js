@@ -7,6 +7,15 @@ export const convertBoolean = (valuestr) => {
   }
 }
 
+export const convertNum2Boolean = (valuestr) => {
+  const lowcase = valuestr.toLowerCase()
+  if (lowcase === 'true' || lowcase === '1') {
+    return true
+  } else {
+    return false
+  }
+}
+
 export const isvalidateBoolean = (rule, value, callback) => {
   if (value != null && value !== '') {
     const lowcase = value.toLowerCase()

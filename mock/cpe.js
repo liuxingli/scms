@@ -3927,6 +3927,68 @@ const ipstackdata = {
   'flag': 0
 }
 
+const ethdata =
+[
+  { path: 'Device.Ethernet.LinkNumberOfEntries', value: '2' },
+  { path: 'Device.Ethernet.Link.1.Enable', value: '1' },
+  { path: 'Device.Ethernet.Link.1.Name', value: 'eth0' },
+  { path: 'Device.Ethernet.Link.1.LowerLayers', value: 'Device.Ethernet.Interface.1.' },
+  { path: 'Device.Ethernet.Link.1.MACAddress', value: '00:1E:73:45:54:54' },
+  { path: 'Device.Ethernet.Link.2.Enable', value: '1' },
+  { path: 'Device.Ethernet.Link.2.Name', value: 'eth1' },
+  { path: 'Device.Ethernet.Link.2.LowerLayers', value: 'Device.Ethernet.Interface.2.' },
+  { path: 'Device.Ethernet.Link.2.MACAddress', value: '00:1E:73:45:54:55' },
+  { path: 'Device.Ethernet.VLANTermination.1.Enable', value: '1' },
+  { path: 'Device.Ethernet.VLANTermination.1.Name', value: 'eth1' },
+  { path: 'Device.Ethernet.VLANTermination.1.LowerLayers', value: 'Device.Ethernet.Link.2.' },
+  { path: 'Device.Ethernet.VLANTermination.1.VLANID', value: '6' }
+]
+
+const ipv4data =
+[
+  { path: 'Device.IP.Interface.1.MaxMTUSize', value: '1500' },
+  { path: 'Device.IP.Interface.1.Type', value: 'Normal' },
+  { path: 'Device.IP.Interface.1.Name', value: 'eth0' },
+  { path: 'Device.IP.Interface.1.Router', value: 'Device.Routing.Router.1.' },
+  { path: 'Device.IP.Interface.1.LowerLayers', value: 'Device.Ethernet.Link.1.' },
+  { path: 'Device.IP.Interface.1.IPv4Address.1.Enable', value: '1' },
+  { path: 'Device.IP.Interface.1.IPv4Address.1.IPAddress', value: '10.188.6.117' },
+  { path: 'Device.IP.Interface.1.IPv4Address.1.SubnetMask', value: '255.255.255.0' },
+  { path: 'Device.IP.Interface.1.IPv4Address.1.DefaultGateway', value: '10.188.6.10' },
+  { path: 'Device.IP.Interface.1.IPv4Address.1.AddressingType', value: 'DHCP' },
+  { path: 'Device.IP.Interface.2.MaxMTUSize', value: '1500' },
+  { path: 'Device.IP.Interface.2.Type', value: 'Normal' },
+  { path: 'Device.IP.Interface.2.Name', value: 'eth1.6' },
+  { path: 'Device.IP.Interface.2.Router', value: '' },
+  { path: 'Device.IP.Interface.2.LowerLayers', value: 'Device.Ethernet.VLANTermination.1.' },
+  { path: 'Device.IP.Interface.2.IPv4Address.1.Enable', value: '1' },
+  { path: 'Device.IP.Interface.2.IPv4Address.1.IPAddress', value: '192.168.8.248' },
+  { path: 'Device.IP.Interface.2.IPv4Address.1.SubnetMask', value: '255.255.255.0' },
+  { path: 'Device.IP.Interface.2.IPv4Address.1.DefaultGateway', value: '' },
+  { path: 'Device.IP.Interface.2.IPv4Address.1.AddressingType', value: 'Static' }
+]
+
+const routedata =
+[
+  { path: 'Device.Routing.Router.1.IPv4Forwarding.1.Enable', value: '1' },
+  { path: 'Device.Routing.Router.1.IPv4Forwarding.1.StaticRoute', value: '0' },
+  { path: 'Device.Routing.Router.1.IPv4Forwarding.1.DestIPAddress', value: '0.0.0.0' },
+  { path: 'Device.Routing.Router.1.IPv4Forwarding.1.DestSubnetMask', value: '0.0.0.0' },
+  { path: 'Device.Routing.Router.1.IPv4Forwarding.1.GatewayIPAddress', value: '10.188.6.10' },
+  { path: 'Device.Routing.Router.1.IPv4Forwarding.1.Interface', value: 'Device.IP.Interface.1.' },
+  { path: 'Device.Routing.Router.1.IPv4Forwarding.1.Origin', value: 'DHCPv4' }
+]
+
+const dnsdata =
+[
+  { path: 'Device.DNS.Client.Server.1.Enable', value: '1' },
+  { path: 'Device.DNS.Client.Server.1.DNSServer', value: '10.88.1.1' },
+  { path: 'Device.DNS.Client.Server.1.Type', value: 'DHCP' },
+  { path: 'Device.DNS.Client.Server.2.Enable', value: '1' },
+  { path: 'Device.DNS.Client.Server.2.DNSServer', value: '0.0.0.0' },
+  { path: 'Device.DNS.Client.Server.2.Type', value: 'DHCP' }
+]
+
 export default [
   {
     url: '/action/cpe_setparametervalues',
@@ -3948,9 +4010,23 @@ export default [
     response: config => {
       let errflg = false
       let errpath = ''
-      const retdata = []
+      let retdata = []
       const inputdata = config.body
       for (const dataitem of inputdata) {
+        if (dataitem.path === 'Device.Ethernet.') {
+          retdata = ethdata
+          break
+        } else if (dataitem.path === 'Device.IP.Interface.') {
+          retdata = ipv4data
+          break
+        } else if (dataitem.path === 'Device.Routing.Router.') {
+          retdata = routedata
+          break
+        } else if (dataitem.path === 'Device.DNS.Client.Server.') {
+          retdata = dnsdata
+          break
+        }
+
         if (devicevalues.has(dataitem.path)) { // get value
           retdata.push({ path: dataitem.path, value: devicevalues.get(dataitem.path) })
         } else { // unsupport value
